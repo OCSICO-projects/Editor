@@ -1,0 +1,41 @@
+<div id="shape-settings" *ngIf="isShapeSelected()">
+	<div class="mat-h2">{{ 'EDITOR.OBJECTS.SHAPE' | translate }}</div>
+	<div class="card">
+		<div class="card-title" fxLayout="row" fxLayoutAlign="space-between center">
+			<div fxLayout="row" fxLayoutAlign="start center">
+				<p>{{ 'EDITOR.PROPERTIES.SHAPE_PROPERTIES' | translate }}</p>
+			</div>
+			<button mat-icon-button aria-label="expand card" (click)="connectEditorExpanded = !connectEditorExpanded">
+				<mat-icon *ngIf="shapeEditorExpanded">keyboard_arrow_up</mat-icon>
+				<mat-icon *ngIf="!shapeEditorExpanded">keyboard_arrow_down</mat-icon>
+			</button>
+		</div>
+		<div class="card-expand-area" *ngIf="connectEditorExpanded">
+
+			<div *ngIf="!isRectangleSelected()" class="card-expanded-content">
+				<mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.BORDER_STYLE' | translate }}</mat-label>
+				<mat-select class="input" [(ngModel)]="strokeLineJoin" placeholder="{{ 'EDITOR.PROPERTIES.BORDER_STYLE' | translate }}">
+					<mat-option value="miter">{{'EDITOR.PROPERTIES.BORDER_STYLES.MITER' | translate }}</mat-option>
+					<mat-option value="round">{{'EDITOR.PROPERTIES.BORDER_STYLES.ROUND' | translate }}</mat-option>
+					<mat-option value="bevel">{{'EDITOR.PROPERTIES.BORDER_STYLES.BEVEL' | translate }}</mat-option>
+				</mat-select>
+			</div>
+
+			<div *ngIf="isRectangleSelected()" class="card-expanded-content">
+				<mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.BORDER_RADIUS' | translate }}</mat-label>
+				<mat-slider
+					class="input" 
+					[max]="max" 
+					[min]="min" 
+					[step]="step" 
+					[value]="borderRadius" 
+					(input)="borderRadius = $event.value"
+					(change)="editorService.pushHistoryState()"
+				>
+				</mat-slider>
+				<p class="text">{{ borderRadius }}</p>
+			</div>
+
+		</div>
+	</div>
+</div>

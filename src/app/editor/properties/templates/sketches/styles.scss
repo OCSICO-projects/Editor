@@ -1,0 +1,59 @@
+@import 'src/styles/variables.scss';
+
+.sketch {
+  display: flex;
+  justify-content: space-between;
+  border: 4px solid mat-contrast($primary, 500);
+  border-radius: 4px;
+  background-color: mat-contrast($primary, 500);
+  width: 100%;
+  height: 100%;
+}
+
+.area {
+  background-color: $canvas-bg-color;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cell { width: 100%; }
+
+.row-theater-big { height: calc(80% - 1px); }
+
+.row-theater-small { height: calc(20% - 1px); }
+
+.column-theater-big { width: calc(80% - 2px); }
+
+.column-theater-small { width: calc(10% - 1px); }
+
+.row-2 { height: calc(50% - 1px); }
+
+.row-3 {
+  height: 100%;
+
+  &:nth-child(2) {
+    margin: 2px 0;
+  }
+}
+
+.column-2 { width: calc(50% - 1px); }
+
+.column-3 {
+  width: 100%;
+
+  &:nth-child(2) {
+    margin: 0 2px;
+  }
+}

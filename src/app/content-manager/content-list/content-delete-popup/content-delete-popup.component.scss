@@ -1,0 +1,43 @@
+@import 'src/styles/variables.scss';
+
+mat-toolbar-row {
+  background: mat-color($primary);
+  color: mat-contrast($primary, 500);
+  padding: 12px;
+
+  mat-icon {
+    color: mat-contrast($primary, 50);
+  }
+
+  span {
+    font-size: 18px;
+  }
+}
+
+mat-dialog-container {
+  padding: 0;
+}
+
+.dialog-content-wrapper {
+  overflow: hidden;
+  min-width: 40vh;
+}
+
+.popup-content {
+	margin-top: 40px;
+  overflow: auto;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.button-block {
+  margin: 20px;
+
+  .apply {
+    background-color: mat-color($accent);
+		color: mat-contrast($primary, 500);
+		margin-right: 10px;
+  }
+}

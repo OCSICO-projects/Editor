@@ -1,0 +1,54 @@
+@import 'src/styles/variables.scss';
+
+.object {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding: 10px 0;
+
+  &--active {
+    background-color: mat-color($primary, 50) !important;
+  }
+
+  .visibility-icon {
+    color: rgba(35, 67, 83, 0.3);
+    font-size: 18px;
+
+    &--visible {
+      color: rgb(35, 67, 83);
+    }
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+  }
+
+  .media {
+    width: 49px;
+    min-width: 49px;
+    max-width: 49px;
+    height: 60px;
+  	cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .description {
+    cursor: pointer;
+    flex-basis: 65%;
+    padding-left: 12px;
+
+    .description-title {
+      margin-bottom: 2px;
+      color: black;
+    }
+
+    .description-type {
+      color: rgba(0, 0, 0, 0.6)
+    }
+  }
+}

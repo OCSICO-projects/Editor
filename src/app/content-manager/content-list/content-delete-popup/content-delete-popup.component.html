@@ -1,0 +1,19 @@
+<div class="dialog-content-wrapper">
+	<mat-toolbar matDialogTitle>
+		<mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+			<span class="title dialog-title">{{ 'BUTTONS.DELETE' | translate }}</span>
+			<button mat-button class="mat-icon-button" [mat-dialog-close]="" aria-label="Close dialog">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-toolbar-row>
+	</mat-toolbar>
+	<div mat-dialog-content class="popup-content">
+		<div fxLayout="row" fxLayoutAlign="center center" class="content-info">
+			<h1 class="mat-h1">Are you sure?</h1>
+		</div>
+		<div class="button-block" fxLayoutAlign="center center">
+			<button mat-button class="btn apply" type="button" [mat-dialog-close]="data.id">{{ 'BUTTONS.APPLY' | translate }}</button>
+			<button mat-button class="btn cancel" [mat-dialog-close]="">{{ 'BUTTONS.CANCEL' | translate }}</button>
+		</div>
+	</div>
+</div>

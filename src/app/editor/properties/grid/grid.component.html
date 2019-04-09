@@ -1,0 +1,24 @@
+<div class="grid-container">
+  <mat-checkbox
+    class="long-sub-title"
+    [(ngModel)]="showGrid"
+    labelPosition="before"
+  >
+    {{'EDITOR.PROPERTIES.SHOW_GRID' | translate}}
+  </mat-checkbox>
+
+  <div *ngIf="showGrid" class="grid-settings-wrapper">
+    <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.GRID_SIZE' | translate }}</mat-label>
+    <mat-slider
+      class="input"
+      [min]="min"
+      [max]="max"
+      [step]="step"
+      [(ngModel)]="gridSize"
+      (input)="updateGridSize($event.value)"
+      (change)="editorService.pushHistoryState()"
+    >
+    </mat-slider>
+    <p class="text">{{ currentSlide.general.gridSize }}</p>
+  </div>
+</div>

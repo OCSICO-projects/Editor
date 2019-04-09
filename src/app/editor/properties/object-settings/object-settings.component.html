@@ -1,0 +1,397 @@
+<div *ngIf="selectedObject" tourAnchor="editor-object-settings">
+    <div class="mat-h2">{{ 'EDITOR.OBJECTS.OBJECT' | translate }}</div>
+    <div class="card">
+        <div class="card-title" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <p>{{ 'EDITOR.PROPERTIES.OBJECT_PROPERTIES' | translate }}</p>
+            </div>
+            <button mat-icon-button aria-label="expand card" (click)="objectSettingsExpanded = !objectSettingsExpanded">
+                <mat-icon *ngIf="objectSettingsExpanded">keyboard_arrow_up</mat-icon>
+                <mat-icon *ngIf="!objectSettingsExpanded">keyboard_arrow_down</mat-icon>
+            </button>
+        </div>
+        <div class="card-expand-area" *ngIf="objectSettingsExpanded">
+
+            <ng-template [ngIf]="isRating() || isFeedbackForm()">
+                <div class="card-expanded-content" [class.disabled]="isRating()">
+                    <mat-label class="long-sub-title">{{ 'EDITOR.PROPERTIES.COLOR' | translate }}</mat-label>
+                    <input
+                        matInput
+                        readonly
+                        class="input-picker"
+                        type="text"
+                        [cpPosition]="'bottom'"
+                        [(colorPicker)]="selectedObject.textBackgroundColor"
+                        (cpToggleChange)="$event ? void : pushHistoryState()"
+                        [style.background]="selectedObject.textBackgroundColor"
+                        [disabled]="isRating()"
+                    >
+                    <p class="input-picker-text">{{ selectedObject.textBackgroundColor }}</p>
+                </div>
+            </ng-template>
+
+            <ng-template [ngIf]="!isFormGroup() || isFeedbackForm()">
+                <div *ngIf="isFillShown()" class="card-expanded-content" [class.disabled]="isRating()">
+                    <mat-label class="long-sub-title">{{ 'EDITOR.PROPERTIES.FILL_COLOR' | translate }}</mat-label>
+                    <input
+                        matInput
+                        readonly
+                        class="input-picker"
+                        type="text"
+                        [cpPosition]="'bottom'"
+                        [(colorPicker)]="fill"
+                        (cpToggleChange)="$event ? void : pushHistoryState()"
+                        [style.background]="fill"
+                        [disabled]="isRating()"
+                    >
+                    <p class="input-picker-text">{{ selectedObject.fill }}</p>
+                </div>
+
+                <div *ngIf="isRating() || isFeedbackForm()" class="card-expanded-content" [class.disabled]="isRating()">
+                    <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.SIZE' | translate }}</mat-label>
+                    <mat-slider
+                        class="input"
+                        [max]="120"
+                        [min]="0"
+                        [step]="1"
+                        [value]="selectedObject.starSize"
+                        [(ngModel)]="selectedObject.starSize"
+                        (input)="selectedObject.starSize = $event.value"
+                        (change)="pushHistoryState()"
+                        [disabled]="isRating()"
+                    >
+                    </mat-slider>
+                    <p class="text">{{ selectedObject.starSize }}</p>
+                </div>
+
+                <!-- <div *ngIf="isRating()" class="card-expanded-content">
+                    <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.DISTANCE' | translate }}</mat-label>
+                    <mat-slider
+                        class="input"
+                        [max]="120"
+                        [min]="0"
+                        [step]="1"
+                        [value]="selectedObject.starDistance"
+                        [(ngModel)]="selectedObject.starDistance"
+                        (input)="selectedObject.starDistance = $event.value"
+                        (change)="pushHistoryState()"
+                    >
+                    </mat-slider>
+                    <p class="text">{{ selectedObject.starDistance }}</p>
+                </div> -->
+
+                <div *ngIf="!isFeedbackForm()" class="card-expanded-content" [class.disabled]="isRating()">
+                    <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.BORDER_SIZE' | translate }}</mat-label>
+                    <mat-slider
+                        class="input"
+                        [max]="getMaxBorderWidth()"
+                        [min]="0"
+                        [step]="1"
+                        [value]="strokeWidth"
+                        [(ngModel)]="strokeWidth"
+                        (input)="strokeWidth = $event.value"
+                        (change)="pushHistoryState()"
+                        [disabled]="isRating()"
+                    >
+                    </mat-slider>
+                    <p class="text">{{ selectedObject.strokeWidth }}</p>
+                </div>
+
+                <div *ngIf="isFeedbackForm()" class="card-expanded-content">
+                    <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.BORDER_SIZE' | translate }}</mat-label>
+                    <mat-slider
+                        class="input"
+                        [max]="getMaxBorderWidth()"
+                        [min]="0"
+                        [step]="1"
+                        [value]="selectedObject.borderWidth"
+                        [(ngModel)]="selectedObject.borderWidth"
+                        (input)="selectedObject.borderWidth = $event.value"
+                        (change)="pushHistoryState()"
+                    >
+                    </mat-slider>
+                    <p class="text">{{ selectedObject.borderWidth }}</p>
+                </div>
+
+                <div class="card-expanded-content" [class.disabled]="isRating()">
+                    <mat-label class="long-sub-title">{{ 'EDITOR.PROPERTIES.BORDER_COLOR' | translate }}</mat-label>
+                    <input
+                        matInput
+                        readonly
+                        class="input-picker"
+                        type="text"
+                        [cpPosition]="'bottom'"
+                        [(colorPicker)]="stroke"
+                        (cpToggleChange)="$event ? void : pushHistoryState()"
+                        [style.background]="stroke"
+                        [disabled]="isRating()"
+                    >
+                    <p class="input-picker-text">{{ selectedObject.stroke }}</p>
+                </div>
+            </ng-template>
+
+            <ng-template [ngIf]="!isFormGroup()">
+                <div class="card-expanded-content">
+                    <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.OPACITY' | translate }}</mat-label>
+                    <mat-slider
+                        class="opacity-slider"
+                        [min]="0"
+                        [max]="1"
+                        [step]="0.01"
+                        [value]="selectedObject.opacity"
+                        (input)="selectedObject.opacity = $event.value"
+                        (change)="pushHistoryState()"
+                    >
+                    </mat-slider>
+                    <p class="text">{{ selectedObject.opacity | number:'1.2-2' }}</p>
+                </div>
+            </ng-template>
+
+            <ng-template [ngIf]="!isFormGroup() && !isRating()">
+                <div class="card-expanded-content">
+                    <mat-label class="long-sub-title">{{ 'EDITOR.PROPERTIES.SHADOW' | translate }}</mat-label>
+                    <input
+                        matInput
+                        readonly
+                        class="input-picker"
+                        type="text"
+                        [cpPosition]="'bottom'"
+                        [(colorPicker)]="shadowColor"
+                        [style.background]="shadowColor"
+                        [cpOutputFormat]="'rgba'"
+                        (cpToggleChange)="$event ? void : pushHistoryState()"
+                    >
+                    <p class="input-picker-text">
+                        <mat-checkbox
+                            [checked]="showShadow"
+                            (change)="showShadow = $event.checked; pushHistoryState()"
+                            labelPosition="after"
+                        >
+                        </mat-checkbox>
+                    </p>
+                </div>
+
+                <div class="card-expanded-content">
+                    <div class="setting shadow">
+                        <div class="setting-parameters">
+                            <span class="parameter">
+                                <span class="hint-text parameter-label">X</span>
+                                <mat-form-field class="parameter-input">
+                                    <input
+                                        #shadowXRef
+                                        matInput
+                                        type="number"
+                                        min="-9999"
+                                        max="9999"
+                                        autocomplete="off"
+                                        [(ngModel)]="shadowX"
+                                        (keyup.enter)="shadowXRef.value = shadowX; pushHistoryState()"
+                                        (blur)="shadowXRef.value = shadowX; pushHistoryState()"
+                                    >
+                                </mat-form-field>
+                            </span>
+                            <span class="parameter">
+                                <span class="hint-text parameter-label">Y</span>
+                                <mat-form-field class="parameter-input">
+                                    <input
+                                        #shadowYRef
+                                        matInput
+                                        type="number"
+                                        min="-9999"
+                                        max="9999"
+                                        autocomplete="off"
+                                        [(ngModel)]="shadowY"
+                                        (keyup.enter)="shadowYRef.value = shadowY; pushHistoryState()"
+                                        (blur)="shadowYRef.value = shadowY; pushHistoryState()"
+                                    >
+                                </mat-form-field>
+                            </span>
+                            <span class="parameter">
+                                <span class="hint-text parameter-label">W</span>
+                                <mat-form-field class="parameter-input">
+                                    <input
+                                        #shadowBlurRef
+                                        matInput
+                                        type="number"
+                                        min="0" max="999"
+                                        autocomplete="off"
+                                        [(ngModel)]="shadowBlur"
+                                        (keyup.enter)="shadowBlurRef.value = shadowBlur; pushHistoryState()"
+                                        (blur)="shadowBlurRef.value = shadowBlur; pushHistoryState()"
+                                    >
+                                </mat-form-field>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    *ngIf="currentSlide.general.subtype === 'hotspot' || currentSlide.general.subtype === 'survey'"
+                    class="card-expanded-content"
+                >
+                    <form [formGroup]="form">
+                        <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.URL' | translate }}</mat-label>
+                        <mat-form-field class="parameter-input-large">
+                            <input
+                                #urlRef
+                                matInput
+                                [(ngModel)]="url"
+                                formControlName="url"
+                                (keyup.enter)="urlRef.value = url; pushHistoryState()"
+                                (blur)="urlRef.value = url; pushHistoryState()"
+                            >
+                        </mat-form-field>
+                    </form>
+                </div>
+            </ng-template>
+
+            <div class="card-expanded-content">
+                <mat-checkbox
+                    [(ngModel)]="lockUniScaling"
+                    class="long-sub-title"
+                    labelPosition="before"
+                    (change)="updateRatio()"
+                >{{ 'EDITOR.PROPERTIES.KEEP_ASPECT_RATIO' | translate }}
+                </mat-checkbox>
+            </div>
+
+            <div class="card-expanded-content">
+                <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.SCALE' | translate }}</mat-label>
+                <div class="setting">
+                    <div class="setting-parameters">
+                        <span class="parameter">
+                            <span class="hint-text parameter-label">X</span>
+                            <mat-form-field class="parameter-input-large">
+                                <input
+                                    #scaleXRef matInput
+                                    type="number"
+                                    min="0"
+                                    max="9999"
+                                    autocomplete="off"
+                                    [(ngModel)]="scaleX"
+                                    (input)="updateScaleX(scaleXRef.value)"
+                                >
+                            </mat-form-field>
+                        </span>
+
+                        <span class="parameter">
+                            <span class="hint-text parameter-label">Y</span>
+                            <mat-form-field class="parameter-input-large">
+                                <input
+                                    #scaleYRef matInput
+                                    type="number"
+                                    min="0"
+                                    max="9999"
+                                    autocomplete="off"
+                                    [(ngModel)]="scaleY"
+                                    (input)="updateScaleY(scaleYRef.value)"
+                                >
+                            </mat-form-field>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-expanded-content" *ngIf="isAdjustableSize()">
+                <div class="setting">
+                    <div class="setting-parameters">
+                        <span class="parameter">
+                            <span class="hint-text parameter-label">{{ 'EDITOR.PROPERTIES.WIDTH' | translate }}</span>
+                                <mat-form-field class="parameter-input-large">
+                                <input
+                                    #widthRef
+                                    matInput
+                                    type="number"
+                                    autocomplete="off"
+                                    [(ngModel)]="width"
+                                    (input)="updateWidth(widthRef.value)"
+                                    (keyup.enter)="updateWidth(widthRef.value); $event.target.blur(); pushHistoryState();"
+                                    (blur)="updateWidth(widthRef.value); pushHistoryState();"
+                                >
+                                 </mat-form-field>
+                        </span>
+
+                        <span class="parameter">
+                            <span class="hint-text parameter-label">{{ 'EDITOR.PROPERTIES.HEIGHT' | translate }}</span>
+                            <mat-form-field class="parameter-input-large">
+                                <input
+                                    #heightRef matInput
+                                    type="number"
+                                    autocomplete="off"
+                                    [(ngModel)]="height"
+                                    (input)="updateHeight(heightRef.value)"
+                                    (keyup.enter)="updateHeight(heightRef.value); $event.target.blur(); pushHistoryState();"
+                                    (blur)="updateHeight(heightRef.value); pushHistoryState();"
+                                >
+                            </mat-form-field>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-expanded-content">
+                <mat-label class="long-sub-title">{{ 'EDITOR.PROPERTIES.POSITION' | translate }}</mat-label>
+                <div class="setting">
+                    <div class="setting-parameters">
+                        <span class="parameter">
+                            <span class="hint-text parameter-label">X</span>
+                            <mat-form-field class="parameter-input-large">
+                                <input
+                                    #leftRef
+                                    matInput
+                                    type="number"
+                                    min="0" max="9999"
+                                    autocomplete="off"
+                                    step="1"
+                                    [(ngModel)]="left"
+                                    (input)="leftRef.value = left"
+                                >
+                            </mat-form-field>
+                        </span>
+                        <span class="parameter">
+                            <span class="hint-text parameter-label">Y</span>
+                            <mat-form-field class="parameter-input-large">
+                                <input
+                                    #topRef
+                                    matInput
+                                    type="number"
+                                    min="0"
+                                    max="9999"
+                                    autocomplete="off"
+                                    step="1"
+                                    [(ngModel)]="top"
+                                    (input)="topRef.value = top"
+                                >
+                            </mat-form-field>
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-expanded-content">
+                <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.ANGLE' | translate }}</mat-label>
+                <div class="setting">
+                    <div class="setting-parameters">
+                        <span class="parameter">
+                            <span class="hint-text parameter-label">°</span>
+                            <mat-form-field class="parameter-input-large">
+                                <input
+                                    #angleRef
+                                    matInput
+                                    type="number"
+                                    min="0"
+                                    max="360"
+                                    autocomplete="off"
+                                    step="any"
+                                    [(ngModel)]="angle"
+                                    (input)="angleRef.value = angle"
+                                >
+                            </mat-form-field>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

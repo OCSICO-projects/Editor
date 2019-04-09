@@ -1,0 +1,206 @@
+<div class="editor-page">
+
+	<div class="header" fxLayout fxLayoutAlign="space-between center">
+		<div class="left-side">
+
+			<div class="title-block mat-h1" fxLayoutAlign="center center">
+				<span *ngIf="currentSlide">
+					<p>{{ currentSlide.general.subtype | translate }}: {{	currentSlideName() }}</p>
+				</span>
+				<button (click)="openEditDialog()" class="mat-icon-button" fxLayoutAlign="center center">
+					<mat-icon>edit</mat-icon>
+				</button>
+			</div>
+		</div>
+
+		<button
+			[matMenuTriggerFor]="menu"
+			mat-fab
+			class="new-base-object-button"
+			tourAnchor="editor-header-add"
+			(menuOpened)="onAddMenuOpen()"
+		  >
+			<mat-icon>add</mat-icon>
+		</button>
+
+		<mat-menu #menu class="mat-menu-objects" [overlapTrigger]="false">
+			<button mat-menu-item (click)="openAddFileDialog()">
+				<mat-icon>insert_drive_file</mat-icon>
+				{{ 'EDITOR.NAV.ADD_FILE' | translate }}
+			</button>
+			<button mat-menu-item (click)="objectFactory.addText()">
+				<mat-icon class="text_fields">text_fields</mat-icon>
+				{{'EDITOR.NAV.ADD_TEXT' | translate}}
+			</button>
+			<button mat-menu-item [matMenuTriggerFor]="shapes">
+				<mat-icon class="brush">brush</mat-icon>
+				{{'EDITOR.NAV.ADD_SHAPE' | translate}}
+			</button>
+
+			<mat-menu #shapes="matMenu">
+				<button mat-menu-item (click)="objectFactory.addRect()">
+					<mat-icon>crop_square</mat-icon>
+					{{'EDITOR.OBJECTS.SHAPES.RECTANGLE' | translate}}
+				</button>
+
+				<button mat-menu-item (click)="objectFactory.addStar()">
+					<mat-icon>star</mat-icon>
+					{{'EDITOR.OBJECTS.SHAPES.STAR' | translate}}
+				</button>
+
+				<button mat-menu-item (click)="objectFactory.addCircle()">
+					<mat-icon>brightness_1</mat-icon>
+					{{'EDITOR.OBJECTS.SHAPES.CIRCLE' | translate}}
+				</button>
+
+				<button mat-menu-item (click)="objectFactory.addTriangle()">
+					<mat-icon>details</mat-icon>
+					{{'EDITOR.OBJECTS.SHAPES.TRIANGLE' | translate}}
+				</button>
+			</mat-menu>
+
+			<ng-template [ngIf]="isFeedbackFormAdded()">
+				<button mat-menu-item (click)="objectFactory.addRating()">
+					<mat-icon>star_half</mat-icon>
+					{{'EDITOR.NAV.ADD_RATING' | translate}}
+				</button>
+
+				<button mat-menu-item (click)="objectFactory.addComment()">
+					<mat-icon>insert_comment</mat-icon>
+					{{'EDITOR.NAV.ADD_COMMENT' | translate}}
+				</button>
+			</ng-template>
+
+			<ng-template [ngIf]="isHotspotOrSurvey()">
+				<button mat-menu-item [matMenuTriggerFor]="buttons" [disabled]="isFacebookButtonAdded() && isTwitterButtonAdded() && isLinkedinButtonAdded() && isFormAdded()">
+					<mat-icon>view_agenda</mat-icon>
+					{{'EDITOR.NAV.ADD_FORM_BUTTON' | translate}}
+				</button>
+
+				<mat-menu #buttons>
+					<button mat-menu-item *ngIf="isHotspot()" (click)="objectFactory.addVoucherForm()" [disabled]="isFormAdded()">
+						<mat-icon>receipt</mat-icon>
+						{{'EDITOR.OBJECTS.BUTTONS.VOUCHER' | translate}}
+					</button>
+
+					<button mat-menu-item *ngIf="isHotspot()" (click)="objectFactory.addConnectForm()" [disabled]="isFormAdded()">
+						<mat-icon>settings_system_daydream</mat-icon>
+						{{'EDITOR.OBJECTS.BUTTONS.CONNECT' | translate}}
+					</button>
+
+					<ng-template [ngIf]="isSurvey()">
+						<button mat-menu-item (click)="objectFactory.addFeedbackGroup()" [disabled]="isFormAdded()">
+							<mat-icon>star_half</mat-icon>
+							{{'EDITOR.OBJECTS.BUTTONS.FEEDBACK' | translate}}
+						</button>
+					</ng-template>
+
+					<ng-template [ngIf]="isHotspot()">
+						<button mat-menu-item (click)="objectFactory.addFacebookButton()" [disabled]="isFacebookButtonAdded()">
+							<mat-icon>people</mat-icon>
+							{{'EDITOR.OBJECTS.BUTTONS.FACEBOOK' | translate}}
+						</button>
+
+						<button mat-menu-item (click)="objectFactory.addTwitterButton()" [disabled]="isTwitterButtonAdded()">
+							<mat-icon>message</mat-icon>
+							{{'EDITOR.OBJECTS.BUTTONS.TWITTER' | translate}}
+						</button>
+
+						<button mat-menu-item (click)="objectFactory.addLinkedinButton()" [disabled]="isLinkedinButtonAdded()">
+							<mat-icon>business_center</mat-icon>
+							{{'EDITOR.OBJECTS.BUTTONS.LINKEDIN' | translate}}
+						</button>
+					</ng-template>
+				</mat-menu>
+			</ng-template>
+
+			<mat-divider></mat-divider>
+			<button mat-menu-item [matMenuTriggerFor]="addBaseObjectMenu">
+				<mat-icon>note_add</mat-icon>
+				<span>{{ 'EDITOR.NAV.CREATE_NEW' | translate }}</span>
+			</button>
+
+			<button mat-menu-item (click)="openAddFileDialog(true)">
+				<mat-icon>perm_media</mat-icon>
+				<span>Open Slide</span>
+			</button>
+
+			<mat-menu #addBaseObjectMenu="matMenu" class="mat-menu-add-base-objects" [overlapTrigger]="false">
+				<button mat-menu-item (click)="openSlideEditDialog(true)">
+					<mat-icon class="web">web</mat-icon>
+					<span>{{ 'EDITOR.SLIDES.TYPES.SLIDE' | translate }}</span>
+				</button>
+
+				<!-- <button (click)="openHotspotEditDialog(true)" mat-menu-item>
+						<mat-icon class="wifi">wifi</mat-icon>
+						<span>{{ 'EDITOR.SLIDES.TYPES.HOTSPOT' | translate }}</span>
+					</button>
+
+					<button (click)="openSurveyEditDialog(true)" mat-menu-item>
+						<mat-icon class="poll">star_half</mat-icon>
+						<span>{{ 'EDITOR.SLIDES.TYPES.SURVEY' | translate }}</span>
+					</button> -->
+			</mat-menu>
+		</mat-menu>
+
+		<mat-menu #objectMenu>
+			<button mat-menu-item (click)="openAddFileDialog()">
+				<mat-icon>insert_drive_file</mat-icon>
+				{{ 'EDITOR.OBJECTS.BUTTONS.FILES' | translate }}
+			</button>
+
+			<button mat-menu-item>
+				<mat-icon>text_format</mat-icon>
+				{{ 'EDITOR.OBJECTS.BUTTONS.TEXT' | translate }}
+			</button>
+
+			<button mat-menu-item>
+				<mat-icon>crop_square</mat-icon>
+				{{ 'EDITOR.OBJECTS.BUTTONS.SHAPE' | translate }}
+			</button>
+		</mat-menu>
+
+		<div fxLayout fxLayoutAlign="space-between center" class="right-side">
+			<div class="controls">
+				<span class="history-actions">
+					<button class="mat-icon-button" (click)="editorService.undo()" [class.history-action--disabled]="!editorService.isUndoAvailable()"
+					 [disabled]="!editorService.isUndoAvailable()">
+						<mat-icon>undo</mat-icon>
+					</button>
+					<button class="mat-icon-button" (click)="editorService.redo()" [class.history-action--disabled]="!editorService.isRedoAvailable()"
+					 [disabled]="!editorService.isRedoAvailable()">
+						<mat-icon>redo</mat-icon>
+					</button>
+				</span>
+				<button (click)="openPreviewDialog()" class="mat-icon-button">
+					<mat-icon>play_circle_outline</mat-icon>
+				</button>
+			</div>
+
+			<div class="actions">
+				<button (click)="saveCurrentSlide()" class="submit mat-button">{{'BUTTONS.SAVE' | translate | uppercase}}</button>
+			</div>
+
+			<app-logout></app-logout>
+		</div>
+	</div>
+
+	<div class="editor">
+		<div class="properties">
+			<app-editor-properties></app-editor-properties>
+		</div>
+
+		<div class="workspace mat-primary-100-bg">
+			<app-editor-workspace></app-editor-workspace>
+		</div>
+
+		<div class="objects">
+			<app-editor-objects></app-editor-objects>
+		</div>
+	</div>
+
+	<div class="project-version mat-h2">
+		V0.0.9
+	</div>
+
+</div>

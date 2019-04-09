@@ -1,0 +1,42 @@
+<div class="modal-header">
+	<div class="title">{{ (data.isNew ? 'EDITOR.HOTSPOTS.NEW' : 'EDITOR.HOTSPOTS.EDIT') | translate }}</div>
+	<button mat-dialog-close="" mat-button class="mat-icon-button">
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
+<div class="modal-body">
+	<form class="form" [formGroup]="hotspotForm" (ngSubmit)="onSubmit()">
+		<mat-form-field>
+			<input matInput autocomplete="off" placeholder="{{ 'EDITOR.HOTSPOTS.FIELDS.NAME' | translate }}" formControlName="name"
+			 required>
+		</mat-form-field>
+
+		<ng-template [ngIf]="!isNew()">
+			<mat-form-field>
+				<input matInput placeholder="{{ 'EDITOR.HOTSPOTS.FIELDS.SSID' | translate }}" formControlName="ssid">
+			</mat-form-field>
+
+			<mat-form-field>
+				<mat-select placeholder="{{ 'EDITOR.HOTSPOTS.FIELDS.REDIRECT_TYPE' | translate }}" formControlName="redirectType">
+					<mat-option [value]="RedirectType.external">{{ 'EDITOR.HOTSPOTS.FIELDS.EXTERNAL' | translate }}</mat-option>
+					<mat-option [value]="RedirectType.internal">{{ 'EDITOR.HOTSPOTS.FIELDS.INTERNAL' | translate }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field *ngIf="hotspotForm.get('redirectType').value === RedirectType.external">
+				<input matInput placeholder="{{ 'EDITOR.HOTSPOTS.FIELDS.REDIRECT_URL' | translate }}" formControlName="redirectUrl">
+			</mat-form-field>
+
+			<app-editor-redirect-resource *ngIf="hotspotForm.get('redirectType').value === RedirectType.internal"
+			 formControlName="redirectId">
+			</app-editor-redirect-resource>
+		</ng-template>
+
+		<div class="buttons">
+			<button mat-raised-button type="submit" [ngClass]="hotspotForm.invalid ? 'disabled' : 'submit'" [disabled]="hotspotForm.invalid">
+				{{ (data.isNew ? 'BUTTONS.ADD' : 'BUTTONS.SAVE') | translate }}
+			</button>
+			<button mat-button mat-dialog-close="" class="cancel">{{'BUTTONS.CANCEL' | translate }}</button>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,31 @@
+<mat-card class="object mat-white-bg" [ngClass]="{ 'object--active': isActive }">
+	<button mat-icon-button class="mat-icon-button" (click)="toggleVisibility()">
+			<mat-icon *ngIf="object.visible" class="visibility-icon visibility-icon--visible">visibility</mat-icon>
+			<mat-icon *ngIf="!object.visible" class="visibility-icon">visibility_off</mat-icon>
+	</button>
+	<div [ngStyle]="{'background-image': 'url(' + previewSrc + ')'}" class="media"></div>
+	<div class="description" (click)="select()">
+			<div class="description-title">
+					<input
+							matInput
+							#input
+							type="text"
+							[(ngModel)]="object.resourceName ? object.resourceName : object.title"
+							(keyup.enter)="onChangeName()"
+							(blur)="editorService.pushHistoryState()"
+							placeholder=""
+							spellcheck="false"
+					>
+			</div>
+			<div class="description-type">{{ type }}</div>
+	</div>
+
+	<mat-menu #objectMenu>
+			<button mat-menu-item *ngIf="isCopyAvailable()" (click)="copy()">{{ 'BUTTONS.COPY' | translate }}</button>
+			<button mat-menu-item *ngIf="isDeleteAvailable()" (click)="delete()">{{ 'BUTTONS.DELETE' | translate }}</button>
+	</mat-menu>
+
+	<button mat-icon-button *ngIf="isCopyAvailable() || isDeleteAvailable()" class="mat-icon-button" [matMenuTriggerFor]="objectMenu">
+			<mat-icon>more_vert</mat-icon>
+	</button>
+</mat-card>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Group_1163"
+   data-name="Group 1163"
+   viewBox="0 0 28.645 28.644"
+   version="1.1"
+   sodipodi:docname="preview.svg"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="16.5"
+     inkscape:cx="14.7"
+     inkscape:cy="17"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Group_1163" />
+  <path
+     id="Path_994"
+     data-name="Path 994"
+     fill="#fff"
+     d="M22.1,3H5.387A2.394,2.394,0,0,0,3,5.387V22.1a2.394,2.394,0,0,0,2.387,2.387H22.1A2.394,2.394,0,0,0,24.483,22.1V5.387A2.394,2.394,0,0,0,22.1,3Zm0,19.1H5.387V5.387H22.1Z"
+     transform="translate(0.58 0.58)" />
+  <path
+     id="Path_995"
+     data-name="Path 995"
+     fill="none"
+     d="M0,0H28.644V28.644H0Z" />
+  <path
+     id="Path_996"
+     data-name="Path 996"
+     fill="#fc6a42"
+     d="M10,8V19l6.876-5.5Z"
+     transform="translate(1.481 0.821)"
+     style="fill:#ffffff;fill-opacity:1" />
+</svg>

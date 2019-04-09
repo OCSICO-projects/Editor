@@ -1,0 +1,59 @@
+@import 'src/styles/variables.scss';
+
+.message-container {
+  overflow: hidden;
+  min-width: 40vh;
+
+  .mat-dialog-title {
+		background-color: mat-color($primary);
+		color: mat-contrast($primary, 500);
+		margin: 0;
+		font-size: mat-font-size($typography, title);
+	}
+	
+	.mat-dialog-content {
+		margin: 0;
+
+		.mat-h1 {
+			margin: 0;
+			padding: 35px;
+			text-align: center;
+		}
+	}
+	
+	.mat-dialog-actions {
+		margin: 0;		
+		padding: 0 0 12px 0;
+	}
+
+  .mat-button {
+    color: mat-contrast($primary, 100);
+  }
+}
+
+.message-content {
+  max-width: 400px;
+}
+
+.message-type-icon {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.alert {
+  display: flex;
+
+  > div {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.warn {
+	background-color: mat-color($warn, 300);
+	color: mat-contrast($primary, 500)
+}
+
+.mat-red, .mat-green {
+	margin: 20px;
+}

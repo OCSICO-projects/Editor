@@ -1,0 +1,12 @@
+<div class="modal-header mat-h2">
+	<div class="title">{{ 'EDITOR.SLIDES.PREVIEW' | translate }}: {{ currentSlide.general.name }}</div>
+	<button mat-button class="mat-icon-button" (click)="toggleFullScreenMode()">
+		<mat-icon>{{ fullScreenMode ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+	</button>
+	<button mat-dialog-close="" mat-button class="mat-icon-button">
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
+<div class="modal-body">
+	<canvas #canvas [width]="canvasWidth" [height]="canvasHeight"></canvas>
+</div>

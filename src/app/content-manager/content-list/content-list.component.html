@@ -1,0 +1,107 @@
+<div *ngIf="dataSource" class="table">
+	<mat-table #table [dataSource]="dataSource" matSort>
+
+		<!-- Type Column -->
+		<ng-container cdkColumnDef="icon">
+			<mat-header-cell *cdkHeaderCellDef fxFlex="64px"></mat-header-cell>
+			<mat-cell *cdkCellDef="let row" fxFlex="64px">
+				<app-content-item-icon *ngIf="row" [row]=row></app-content-item-icon>
+			</mat-cell>
+		</ng-container>
+
+		<!-- Name Column -->
+		<ng-container cdkColumnDef="name">
+			<mat-header-cell *cdkHeaderCellDef mat-sort-header>{{'TABLE.HEADER.NAME' | translate}}</mat-header-cell>
+			<mat-cell *cdkCellDef="let row" title="{{ row.name }}">
+				<span *ngIf="row"> {{row.name | ellipsisText: 20}} </span>
+			</mat-cell>
+		</ng-container>
+
+		<!-- Type Column -->
+		<ng-container cdkColumnDef="type">
+			<mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-md mat-sort-header>{{'TABLE.HEADER.TYPE' | translate}}</mat-header-cell>
+			<mat-cell *cdkCellDef="let row" fxHide fxShow.gt-md>
+				<span *ngIf="row.subtype">{{row.subtype | lowercase}}</span>
+				<span *ngIf="!row.subtype">{{row.type | lowercase}}</span>
+			</mat-cell>
+		</ng-container>
+
+		<!-- Size Column -->
+		<ng-container cdkColumnDef="size">
+			<mat-header-cell *cdkHeaderCellDef fxHide.xs>{{'TABLE.HEADER.SIZE' | translate}}</mat-header-cell>
+			<mat-cell *cdkCellDef="let row" fxHide.xs>
+				<span *ngIf="row"> {{ row.size ? convertSize(row.size) : '-' }} </span>
+			</mat-cell>
+		</ng-container>
+
+		<!-- Modified Column -->
+		<ng-container cdkColumnDef="modified">
+			<mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-md>{{'TABLE.HEADER.MODIFIED' | translate}}</mat-header-cell>
+			<mat-cell *cdkCellDef="let row" fxHide fxShow.gt-md>
+				<span *ngIf="row"> {{ row.lastModifiedDate ? dateFormat(row.lastModifiedDate) : '-' }}
+				</span>
+			</mat-cell>
+		</ng-container>
+
+
+		<!-- More Column -->
+		<ng-container cdkColumnDef="more">
+			<mat-header-cell *cdkHeaderCellDef></mat-header-cell>
+			<mat-cell *cdkCellDef="let row">
+
+				<button mat-icon-button [matMenuTriggerFor]="menu">
+					<mat-icon>more_vert</mat-icon>
+				</button>
+				<mat-menu #menu="matMenu">
+					<button mat-menu-item *ngIf="row.type !== 'folder' && row.type !== 'compose'" (click)="nodePreview(row)">
+						<mat-icon>slideshow</mat-icon>{{'BUTTONS.PREVIEW' | translate}}
+					</button>
+					<button mat-menu-item *ngIf="row.type !== 'folder'" (click)="addToCanvas(row)">
+						<mat-icon>library_add</mat-icon>
+						{{!dialogOptions ? 'Add to Slide' : 'Open Slide'}}
+					</button>
+					<button mat-menu-item *ngIf="!row.readOnly" (click)="nodeRename(row)">
+						<mat-icon>text_format</mat-icon>{{'BUTTONS.RENAME' | translate}}
+					</button>
+					<button mat-menu-item *ngIf="!row.readOnly" (click)="nodeMove(row)">
+						<mat-icon class="mat-icon-move">forward</mat-icon>{{'BUTTONS.MOVE' | translate}}
+					</button>
+					<button mat-menu-item *ngIf="!row.readOnly" (click)="nodeDelete(row)">
+						<mat-icon>delete</mat-icon>{{'BUTTONS.DELETE' | translate}}
+					</button>
+				</mat-menu>
+
+			</mat-cell>
+		</ng-container>
+
+		<!-- Detail Button Column -->
+		<ng-container cdkColumnDef="detail-button">
+			<mat-header-cell *cdkHeaderCellDef fxFlex="48px"></mat-header-cell>
+			<mat-cell *cdkCellDef="let row" fxFlex="48px">
+				<button mat-icon-button class="sidenav-toggle">
+					<mat-icon>info</mat-icon>
+				</button>
+			</mat-cell>
+		</ng-container>
+
+		<!-- Detail Button Column -->
+		<ng-container>
+			<mat-header-cell *cdkHeaderCellDef fxFlex="48px"></mat-header-cell>
+			<mat-cell *cdkCellDef="let row" fxFlex="48px">
+				<button mat-icon-button class="sidenav-toggle">
+					<mat-icon>info</mat-icon>
+				</button>
+			</mat-cell>
+		</ng-container>
+
+		<mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row 
+			*cdkRowDef="let row; columns: displayedColumns;" 
+			(click)="onSelect(row)" 
+			(dblclick)="nodeChoose(row)"
+			[ngClass]="{'mat-light-blue-50-bg':row.selected}" 
+			matRipple
+		>
+		</mat-row>
+	</mat-table>
+</div>

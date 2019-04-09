@@ -1,0 +1,37 @@
+<app-editor-animation
+  (onChange)="handleStartChange($event)"
+  (play)="playAnimation($event, 'start')"
+  [object]="object"
+  [animation]="object && object.animations.start"
+  [isPlaying]="isAnimationPlaying.start"
+  label="{{ 'EDITOR.PROPERTIES.START' | translate }}"
+  repetitionEnabled="true"
+>
+</app-editor-animation>
+
+<app-editor-animation
+  (onChange)="handleEndChange($event)"
+  (play)="playAnimation($event, 'stop')"
+  [object]="object"
+  [animation]="object && object.animations.end"
+  [isPlaying]="isAnimationPlaying.stop"
+  label="{{ 'EDITOR.PROPERTIES.END' | translate }}"
+>
+</app-editor-animation>
+
+
+<div class="card">
+	<div class="card-title" fxLayout="row" fxLayoutAlign="space-between center">
+		<div fxLayout="row" fxLayoutAlign="start center">
+			<p>Animation Preview</p>
+		</div>
+		<button mat-icon-button aria-label="expand card" (click)="blockExpanded = !blockExpanded">
+			<mat-icon *ngIf="blockExpanded">keyboard_arrow_up</mat-icon>
+			<mat-icon *ngIf="!blockExpanded">keyboard_arrow_down</mat-icon>
+		</button>
+	</div>
+	<div class="animation-preview-player" [class.player-visible]="!blockExpanded">
+		<canvas #canvasPreviewRef width="268" height="268" id="canvasPreviewRef" [class.preview-visible]="previewVisible"></canvas>
+	</div>
+</div>
+

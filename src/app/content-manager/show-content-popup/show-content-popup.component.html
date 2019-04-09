@@ -1,0 +1,40 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle>
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{ data.name }}</span>
+            <div>
+                <button *ngIf="fullScreen" mat-button class="mat-icon-button"
+                    (click)="toggleFullscreen()"
+                    aria-label="Close dialog">
+                    <mat-icon>fullscreen_exit</mat-icon>
+                </button>
+                <button *ngIf="!fullScreen" mat-button class="mat-icon-button"
+                    (click)="toggleFullscreen()"
+                    aria-label="Close dialog">
+                    <mat-icon>fullscreen</mat-icon>
+                </button>
+                <button mat-button class="mat-icon-button"
+                    (click)="dialogRef.close()"
+                    aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <div mat-dialog-content>
+        <div class="popup-content">
+            <iframe *ngIf="data.subtype === 'youtube' && url" class="youtube-frame"
+                [src]="url" frameborder="0" allow="autoplay; encrypted-media">
+            </iframe>
+            <video *ngIf="data.subtype === 'video' && url" class="video-frame" controls>
+                    <source [src]="url">
+            </video>
+            <div *ngIf="data.subtype !== 'youtube' && data.subtype !== 'video'"  class="media" [ngStyle]="{ 'background-image': 'url(' + contentUrl() +')' }">
+                <audio autoplay controls *ngIf="data.subtype === 'audio'">
+                    <source [src]="getMediaSrc()" type="audio/mpeg">
+                    {{'AUDIO_SUPPORT_ERROR' | translate}}
+                </audio>
+            </div>
+        </div>
+    </div>
+</div>

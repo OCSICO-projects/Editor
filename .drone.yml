@@ -1,0 +1,50 @@
+branches: develop
+
+pipeline:
+  build:
+    image: node:8-alpine
+    commands:
+      - apk --no-cache add python g++ make pkgconfig cairo-dev libpng-dev jpeg-dev giflib-dev
+      - npm install --global yarn
+      - yarn
+      - yarn build-stage
+      - mv dist docker/
+
+  publish:
+    image: plugins/docker
+    dockerfile: docker/Dockerfile
+    context: docker
+    registry: registry.use2go.com
+    repo: registry.use2go.com/use2go-web-app
+    tags: latest
+    secrets:
+    - docker_username
+    - docker_password
+
+  deploy:
+    image: appleboy/drone-ssh
+    host: devbox.use2go.com
+    port: 22
+    username: use2go
+    secrets:
+    - ssh_key
+    - vault_token
+    - trust_store_password
+    - key_store_password
+    envs:
+    - vault_token
+    - trust_store_password
+    - key_store_password
+    script:
+    - docker pull registry.use2go.com/use2go-web-app
+    - docker rm -f webapp-dev || true
+    - |
+      docker run --restart=always --name=webapp-dev \
+        --network=web \
+          -l "traefik.protocol=http" \
+          -l "traefik.backend=webapp-dev" \
+          -l "traefik.frontend.rule=Host:dev.use2go.com" \
+          -l "traefik.frontend.auth.basic=use2go:\$apr1\$LJfCjtta\$UrrtdJ34H6.jPBRZjjdbb1" \
+          -l "traefik.docker.network=web" \
+          -l "traefik.enable=true" \
+        -d registry.use2go.com/use2go-web-app

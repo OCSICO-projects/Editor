@@ -1,0 +1,18 @@
+@import 'src/styles/variables.scss';
+
+app-editor-templates {
+  flex: 1;
+}
+
+app-editor-grid {
+  flex: 1;
+}
+
+.card {
+	background-color: mat-contrast($primary, 500);
+	border: 1px solid $general-setting-color;
+}
+
+#general-settings {
+  margin-bottom: 50px;
+}

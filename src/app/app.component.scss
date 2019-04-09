@@ -1,0 +1,13 @@
+@import 'src/styles/variables.scss';
+
+.step {
+	mat-icon {
+		color: mat-contrast($primary, 500);
+	}
+	&-disabled {
+		mat-icon {
+			color: $history-action-color;
+		}
+	}
+}
+		

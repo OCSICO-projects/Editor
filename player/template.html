@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+</html>
+
+<script>{%INLINE_BUNDLE_PLACEHOLDER%}</script>
+<script>
+    var canvasElement = document.getElementById('canvas');
+    var options = {};
+    try {
+        options = JSON.parse(`{%PLAYER_OPTIONS_PLACEHOLDER%}`);
+    } catch (e) {}
+    var player = new Player(canvasElement, options || {});
+
+    const models = [`{%JSON_PLACEHOLDER%}`];
+
+    const escapedModels = models.map(function(model) {
+        return model.replace(/\n/gm,"\\n");
+    });
+
+    player.load(escapedModels).then(() => { player.play(); });
+</script>

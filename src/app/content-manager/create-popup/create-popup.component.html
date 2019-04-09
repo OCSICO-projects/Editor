@@ -1,0 +1,31 @@
+<div class="dialog-content-wrapper">
+	<mat-toolbar matDialogTitle>
+		<mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+			<span class="title dialog-title">{{ 'CONTENT.FOLDER.ADD' | translate }}</span>
+			<button 
+				mat-button 
+				class="mat-icon-button" 
+				(click)="dialogRef.close()" 
+				aria-label="Close dialog">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-toolbar-row>
+	</mat-toolbar>
+	<div mat-dialog-content class="popup-content">
+		<form class="new-list-form" [formGroup]="addFolderForm">
+			<mat-form-field class="example-full-width">
+				<input 
+					formControlName="name" 
+					matInput 
+					[(ngModel)]="folder.name" 
+					placeholder="Name:" 
+					(keyup.enter)="onFormSubmit()">
+			</mat-form-field>
+
+			<div class="button-block">
+				<button mat-button class="btn apply" (click)="onFormSubmit()" type="button" [disabled]="!addFolderForm.valid">{{ 'BUTTONS.APPLY' | translate }}</button>
+				<button mat-button class="btn cancel"  aria-label="Close dialog" (click)="dialogRef.close()">{{ 'BUTTONS.CANCEL' | translate }}</button>
+			</div>
+		</form>
+	</div>
+</div>

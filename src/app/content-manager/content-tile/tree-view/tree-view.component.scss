@@ -1,0 +1,70 @@
+@import 'src/styles/variables.scss';
+
+.nav {
+  margin-left: 15px;
+    
+  .selected {
+    display: inline-block;
+	}
+	
+  .closed {
+    animation-name: animationClose;
+    animation-duration: 0.3s;
+    transform: rotate(0deg);
+  }
+
+  .opened {
+    animation-name: animationOpen;
+    animation-duration: 0.3s;
+    transform: rotate(90deg);
+	}
+	
+  .title {
+    flex: 1;
+    top: -4px;
+    position: relative;
+	}
+	
+  &:hover {
+    text-decoration: none;
+  }
+
+  a {
+    cursor: pointer;
+		user-select: none;
+			
+    mat-icon {
+      font-size: 20px;
+		}
+
+    .collapse-arrow-hidden {
+      color: mat-contrast($accent, 500);
+    }
+	}
+		
+  a:hover {
+    display: inline-block;
+  }
+}
+
+a:not(.mat-button):not(.mat-raised-button):not(.mat-icon-button):hover {
+  text-decoration: none;
+}
+
+@keyframes animationOpen {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes animationClose {
+  from {
+    transform: rotate(90deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}

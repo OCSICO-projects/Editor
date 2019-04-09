@@ -1,0 +1,31 @@
+<div id="shape-settings" *ngIf="isConnectSelected()">
+    <div class="mat-h2">{{ 'EDITOR.OBJECTS.CONNECT' | translate }}</div>
+    <div class="card">
+        <div class="card-title" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <p>{{ 'EDITOR.PROPERTIES.CONNECT_PROPERTIES' | translate }}</p>
+            </div>
+            <button mat-icon-button aria-label="expand card"
+                    (click)="connectEditorExpanded = !connectEditorExpanded">
+                <mat-icon *ngIf="connectEditorExpanded">keyboard_arrow_up</mat-icon>
+                <mat-icon *ngIf="!connectEditorExpanded">keyboard_arrow_down</mat-icon>
+            </button>
+        </div>
+        <div class="card-expand-area" *ngIf="connectEditorExpanded">
+
+            <div class="card-expanded-content">
+                <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.CONNECTION_PROPERTY' | translate }}</mat-label>
+                <mat-select
+                    class="input"
+                    [(ngModel)]="selectedObject.connectionProperty"
+                    (selectionChange)="editorService.pushHistoryState()"
+                >
+                    <mat-option value="simple">{{'EDITOR.PROPERTIES.CONNECTION_PROPERTIES.NONE' | translate }}</mat-option>
+                    <mat-option value="phone">{{'EDITOR.PROPERTIES.CONNECTION_PROPERTIES.MOBILE' | translate }}</mat-option>
+                    <mat-option value="email">{{'EDITOR.PROPERTIES.CONNECTION_PROPERTIES.EMAIL' | translate }}</mat-option>
+                </mat-select>
+            </div>
+
+        </div>
+    </div>
+</div>

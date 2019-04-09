@@ -1,0 +1,161 @@
+@import 'src/styles/variables.scss';
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  appearance: textfield;
+}
+
+:host ::ng-deep {
+  .mat-slider-horizontal {
+    min-width: auto;
+  }
+}
+
+.card {
+  margin: 10px 0;
+	min-width: auto;
+	
+  .card-title {
+		padding: 5px 5px 5px 10px;
+		
+    div {
+      p {
+        padding: 0 5px;
+        margin: 0;
+        font-size: 16px;
+      }
+  	}
+	}
+	
+  .card-expand-area {
+    padding: 0 0 8px 0;
+    display: flex;
+		flex-direction: column;
+		
+    .card-expanded-content {
+      display: flex;
+      align-items: center;
+      align-content: space-between;
+    	flex-direction: row;
+      margin: 0;
+			padding: 0 18px;
+			
+      .color-picker {
+        top: 0;
+				left: 48px !important;
+				
+        .arrow.arrow-bottom {
+          left: 111px;
+        }
+			}
+			
+      .sub-title {
+        margin: 0;
+        font-size: 14px;
+      	padding: 0 10px 0 0;
+        white-space: nowrap;
+			}
+			
+      .long-sub-title {
+        margin: 0;
+        font-size: 14px;
+        flex: 1;
+        white-space: nowrap;
+			}
+			
+      .mat-checkbox-label-before .mat-checkbox-inner-container {
+        margin-left: 0;
+        margin-right: 0;
+			}
+			
+      .mat-checkbox-layout .mat-checkbox-label {
+        line-height: 28px;
+        flex: 1;
+			}
+			
+      .input-picker {
+        border-radius: 5px;
+      	border: solid 1px $canvas-bg-color;
+        cursor: pointer;
+        margin: 0 15px;
+        width: 50px
+			}
+
+      .input-picker-text {
+        min-width: 70px;
+        white-space: nowrap;
+        text-align: center;
+        padding: 0 0 0 3px;
+				display: flex;
+				
+        mat-checkbox {
+          margin: 0 0 0 47px;
+        }
+			}
+			
+      .input {
+        display: flex;
+        flex: 1;
+        align-content: stretch;
+				align-items: stretch;
+				
+        .button {
+          flex: 1;
+          cursor: pointer;
+          font-size: 35px;
+				}
+				
+        .active {
+          background: $canvas-bg-color;
+				}
+			}
+			
+      .mat-slider {
+        flex: 0.9;
+			}
+			
+      .text {
+        flex: 0.2;
+        text-align: center;
+    	}
+    }
+  }
+}
+
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+	flex: 3;
+	
+  .setting-parameters {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+	}
+	
+  .parameter {
+    .parameter-label {
+      margin-right: 0.4em;
+      font-size: 0.9em;
+      font-weight: 500;
+		}
+		
+    .parameter-input {
+      width: 3em;
+      text-align: center;
+		}
+		
+  	.parameter-input-large {
+      width: 5em;
+      text-align: center;
+    }
+  }
+}
+
+.disabled,
+:host .disabled ::ng-deep * {
+  color: $canvas-bg-color !important;
+  cursor: no-drop !important;
+}

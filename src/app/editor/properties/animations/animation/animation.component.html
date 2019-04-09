@@ -1,0 +1,107 @@
+<div class="card">
+	<div class="card-title" fxLayout="row" fxLayoutAlign="space-between center">
+		<div fxLayout="row" fxLayoutAlign="start center">
+			<p>{{ label }}</p>
+		</div>
+		<button mat-icon-button aria-label="expand card" (click)="blockExpanded = !blockExpanded">
+			<mat-icon *ngIf="blockExpanded">keyboard_arrow_up</mat-icon>
+			<mat-icon *ngIf="!blockExpanded">keyboard_arrow_down</mat-icon>
+		</button>
+	</div>
+
+	<div class="card-expand-area" *ngIf="blockExpanded">
+		<div class="card-expanded-content">
+			<mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.ANIMATION' | translate }}</mat-label>
+		</div>
+
+		<div class="card-expanded-content">
+			<mat-form-field class="animation-type">
+				<mat-select [(value)]="type">
+					<mat-option value>{{ 'EDITOR.PROPERTIES.NONE' | translate }}</mat-option>
+					<mat-option value="{{ AnimationType.fadeIn }}">{{ 'EDITOR.PROPERTIES.FADE_IN' | translate }}</mat-option>
+					<mat-option value="{{ AnimationType.fadeOut }}">{{ 'EDITOR.PROPERTIES.FADE_OUT' | translate }}</mat-option>
+					<mat-option value="{{ AnimationType.zoomIn }}">{{ 'EDITOR.PROPERTIES.ZOOM_IN' | translate }}</mat-option>
+					<mat-option value="{{ AnimationType.zoomOut }}">{{ 'EDITOR.PROPERTIES.ZOOM_OUT' | translate }}</mat-option>
+					<mat-option value="{{ AnimationType.bounceIn }}">{{ 'EDITOR.PROPERTIES.BOUNCE_IN' | translate }}</mat-option>
+					<mat-option value="{{ AnimationType.bounceOut }}">{{ 'EDITOR.PROPERTIES.BOUNCE_OUT' | translate }}</mat-option>
+					<mat-option value="{{ AnimationType.slideInLeft }}">{{ 'EDITOR.PROPERTIES.SLIDE_IN_LEFT' | translate }}</mat-option>
+					<mat-option value="{{ AnimationType.slideOutRight }}">{{ 'EDITOR.PROPERTIES.SLIDE_OUT_RIGHT' | translate }}</mat-option>
+					<mat-option value="{{ AnimationType.rotateIn }}">{{ 'EDITOR.PROPERTIES.ROTATE_IN' | translate }}</mat-option>
+					<mat-option value="{{ AnimationType.rotateOut }}">{{ 'EDITOR.PROPERTIES.ROTATE_OUT' | translate }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<ng-template [ngIf]="type">
+			<div class="card-expanded-content animation-property-row">
+				<mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.START_TIME' | translate }}</mat-label>
+				<mat-form-field class="animation-property-value">
+					<input 
+						#startTimeRef 
+						matInput 
+						type="number"
+						min="1" 
+						max="999" 
+						step="0.5" 
+						autocomplete="off" 
+						[value]="startTime"
+						(keyup.enter)="startTime = startTimeRef.value; startTimeRef.value = startTime" 
+						(blur)="startTime = startTimeRef.value; startTimeRef.value = startTime"
+					>
+					<span matSuffix>{{ 'EDITOR.PROPERTIES.SEC' | translate }}.</span>
+				</mat-form-field>
+			</div>
+
+			<div class="card-expanded-content animation-property-row">
+				<mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.DURATION' | translate }}</mat-label>
+				<mat-form-field class="animation-property-value">
+					<input 
+						#durationRef 
+						matInput 
+						type="number" 
+						min="1" 
+						m
+						ax="999" 
+						step="0.5" 
+						autocomplete="off" 
+						[value]="duration"
+						(keyup.enter)="duration = durationRef.value; durationRef.value = duration" 
+						(blur)="duration = durationRef.value; durationRef.value = duration"
+					>
+					<span matSuffix>Sec.</span>
+				</mat-form-field>
+			</div>
+
+			<div *ngIf="repetitionEnabled" class="card-expanded-content animation-property-row">
+				<mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.REPETITION' | translate }}</mat-label>
+				<mat-form-field class="animation-property-value">
+					<mat-select [(value)]="repetition">
+						<mat-option value>Loop</mat-option>
+						<mat-option *ngFor="let repetitionValue of repetitionRange" [value]="repetitionValue">{{ repetitionValue }}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+
+			<div class="card-expanded-content">
+				<button 
+					*ngIf="!isPlaying" 
+					mat-raised-button 
+					class="animation-preview-button 
+					mat-primary-100-bg" 
+					(click)="startAnimationPreview()"
+				>
+					<mat-icon>slideshow</mat-icon>
+				</button>
+				<button 
+					*ngIf="isPlaying" 
+					disabled 
+					mat-raised-button 
+					class="animation-preview-button-disabled  mat-primary-100-bg"
+				>
+					<mat-icon>hourglass_full</mat-icon>
+				</button>
+			</div>
+
+		</ng-template>
+	</div>
+</div>

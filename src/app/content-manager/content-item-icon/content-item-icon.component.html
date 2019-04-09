@@ -1,0 +1,13 @@
+<div class="icons" [ngSwitch]="row.icon.toLowerCase()">
+	<mat-icon *ngSwitchDefault class="mat-card-icon">folder</mat-icon>
+	<mat-icon *ngSwitchCase="'file'" class="mat-card-icon">insert_drive_file</mat-icon>
+	<mat-icon *ngSwitchCase="'image'" class="mat-card-icon">insert_photo</mat-icon>
+	<mat-icon *ngSwitchCase="'pdf'" class="mat-card-icon">insert_drive_file</mat-icon>
+	<mat-icon *ngSwitchCase="'slide'" class="mat-card-icon">web</mat-icon>
+	<mat-icon *ngSwitchCase="'hotspot'" class="mat-card-icon">wifi</mat-icon>
+	<mat-icon *ngSwitchCase="'survey'" class="mat-card-icon">star_half</mat-icon>
+	<mat-icon *ngSwitchCase="'youtube'" class="mat-card-icon" svgIcon={{row.icon}}></mat-icon>
+	<div *ngSwitchCase="'audio'" class="mat-card-icon audio-icon"></div>
+	<mat-icon *ngSwitchCase="'web'" class="mat-card-icon">view_compact</mat-icon>
+	<mat-icon *ngSwitchCase="'video'" class="mat-card-icon">play_circle_outline</mat-icon>
+</div>

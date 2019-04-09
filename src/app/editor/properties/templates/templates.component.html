@@ -1,0 +1,94 @@
+<mat-checkbox [(ngModel)]="showTemplate" class="long-sub-title" labelPosition="before">{{'EDITOR.PROPERTIES.SHOW_TEMPLATE' | translate}}
+</mat-checkbox>
+
+<div *ngIf="showTemplate">
+    <div class="mat-h2">{{ 'EDITOR.PROPERTIES.TEMPLATES' | translate }}</div>
+
+    <div class="wrapper">
+        <div class="container">
+            <app-editor-template-cell
+                (click)="changeTemplate(CanvasTemplateModel.cell)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.cell"
+            >
+            </app-editor-template-cell>
+
+            <app-editor-template-two-rows
+                (click)="changeTemplate(CanvasTemplateModel.twoRows)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.twoRows"
+            >
+            </app-editor-template-two-rows>
+
+            <app-editor-template-two-columns
+                (click)="changeTemplate(CanvasTemplateModel.twoColumns)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.twoColumns"
+            >
+            </app-editor-template-two-columns>
+
+            <app-editor-template-four-cells
+                (click)="changeTemplate(CanvasTemplateModel.fourCells)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.fourCells"
+            >
+            </app-editor-template-four-cells>
+
+            <app-editor-template-row-two-columns
+                (click)="changeTemplate(CanvasTemplateModel.rowTwoColumns)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.rowTwoColumns"
+            >
+            </app-editor-template-row-two-columns>
+
+            <app-editor-template-two-columns-row
+                (click)="changeTemplate(CanvasTemplateModel.twoColumnsRow)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.twoColumnsRow"
+            >
+            </app-editor-template-two-columns-row>
+
+            <app-editor-template-column-two-rows
+                (click)="changeTemplate(CanvasTemplateModel.columnTwoRows)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.columnTwoRows"
+            >
+            </app-editor-template-column-two-rows>
+
+            <app-editor-template-theater
+                (click)="changeTemplate(CanvasTemplateModel.theater)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.theater"
+            >
+            </app-editor-template-theater>
+
+            <app-editor-template-three-columns
+                (click)="changeTemplate(CanvasTemplateModel.threeColumns)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.threeColumns"
+            >
+            </app-editor-template-three-columns>
+
+            <app-editor-template-row-three-columns
+                (click)="changeTemplate(CanvasTemplateModel.rowThreeColumns)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.rowThreeColumns"
+            >
+            </app-editor-template-row-three-columns>
+
+            <app-editor-template-column-three-rows
+                (click)="changeTemplate(CanvasTemplateModel.columnThreeRows)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.columnThreeRows"
+            >
+            </app-editor-template-column-three-rows>
+
+            <app-editor-template-three-rows
+                (click)="changeTemplate(CanvasTemplateModel.threeRows)"
+                class="template"
+                [class.template--active]="getActiveTemplate() === CanvasTemplateModel.threeRows"
+            >
+            </app-editor-template-three-rows>
+        </div>
+    </div>
+</div>

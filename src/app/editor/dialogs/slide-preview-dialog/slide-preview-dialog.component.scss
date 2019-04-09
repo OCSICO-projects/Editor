@@ -1,0 +1,23 @@
+@import 'src/styles/variables.scss';
+
+:host {
+  ::ng-deep .modal-body > div:first-child {
+    background-color: $canvas-bg-color;
+  }
+}
+
+.mat-h2 {
+  margin: 0;
+}
+
+.modal-body {
+  .details {
+    width: 100%;
+    display: flex;
+		padding: 20px;
+		
+    span {
+      flex: 1;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="3711 -8665 24 24">
+  <defs>
+    <style>
+      .tv_plus {
+        fill: currentColor;
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-path);
+      }
+    </style>
+    <clipPath id="clip-path">
+      <path id="Path_961" data-name="Path 961" class="tv_plus" d="M0,0H24V24H0Z"/>
+    </clipPath>
+  </defs>
+  <g id="ic_queue_play_next_black_24px" class="cls-2" transform="translate(3711 -8665)">
+    <path id="Path_960" data-name="Path 960" class="tv_plus" d="M21,3H3A1.993,1.993,0,0,0,1,5V17a2,2,0,0,0,2,2H8v2h8V19h2V17H3V5H21v8h2V5A2,2,0,0,0,21,3Zm3,15-4.5,4.5L18,21l3-3-3-3,1.5-1.5Z"/>
+  </g>
+</svg>

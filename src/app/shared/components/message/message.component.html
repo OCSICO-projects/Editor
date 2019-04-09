@@ -1,0 +1,50 @@
+<div class="message-container">
+	<mat-toolbar matDialogTitle>
+		<mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+			<h1 matDialogTitle>
+				<span *ngIf="message.type === configType.typeSuccess && !message.title">{{'MESSAGES.SUCCESS' | translate}}</span>
+				<span *ngIf="message.type === configType.typeError && !message.title">{{'MESSAGES.ERROR' | translate}}</span>
+				<span *ngIf="message.type === configType.typeWarning && !message.title">{{'MESSAGES.WARNING' | translate}}</span>
+				<span *ngIf="message.title">{{message.title}}</span>
+			</h1>
+			<button mat-button class="mat-icon-button" [mat-dialog-close]="" aria-label="Close dialog">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-toolbar-row>
+	</mat-toolbar>
+
+	<div mat-dialog-content>
+		<h4 *ngIf="message.subTitle" class="mat-h1">{{message.subTitle}}</h4>
+		<div class="message-content">
+			<div class="alert mat-green mat-h3" *ngIf="message.type === configType.typeSuccess && message.message">
+				<i class="material-icons message-type-icon">check_circle</i>
+				<div *ngIf="message.shouldBeTranslated">{{message.message | translate}}</div>
+				<div *ngIf="!message.shouldBeTranslated">{{message.message}}</div>
+			</div>
+			<div class="alert mat-red mat-h3" *ngIf="message.type === configType.typeError && message.message">
+				<i class="material-icons message-type-icon">error</i>
+				<div *ngIf="message.shouldBeTranslated">{{message.message | translate}}</div>
+				<div *ngIf="!message.shouldBeTranslated">{{message.message}}</div>
+			</div>
+			<div class="alert mat-warn mat-h3" *ngIf="message.type === configType.typeWarning && message.message">
+				<i class="material-icons message-type-icon">warning</i>
+				<div *ngIf="message.shouldBeTranslated">{{message.message | translate}}</div>
+				<div *ngIf="!message.shouldBeTranslated">{{message.message}}</div>
+			</div>
+		</div>
+	</div>
+	<div mat-dialog-actions fxLayoutAlign="center" *ngIf="message.type === configType.typeSuccess">
+		<button [mat-dialog-close]="true" mat-raised-button class="mat-accent"><b>{{'BUTTONS.OK' | translate |
+				uppercase}}</b></button>
+	</div>
+	<div mat-dialog-actions fxLayoutAlign="center" *ngIf="message.type === configType.typeError">
+		<button [mat-dialog-close]="true" mat-raised-button class="mat-warn"><b>{{'BUTTONS.OK' | translate |
+				uppercase}}</b></button>
+	</div>
+	<div mat-dialog-actions fxLayoutAlign="center" *ngIf="message.type === configType.typeWarning">
+		<button [mat-dialog-close]="true" mat-raised-button class="mat-accent"><b>{{'BUTTONS.YES' | translate |
+				uppercase}}</b></button>
+		<button [mat-dialog-close]="false" mat-raised-button class="warn"><b>{{'BUTTONS.NO' | translate |
+				uppercase}}</b></button>
+	</div>
+</div>

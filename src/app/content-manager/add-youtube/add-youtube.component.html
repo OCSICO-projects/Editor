@@ -1,0 +1,67 @@
+<div class="dialog-content-wrapper">
+	<mat-toolbar matDialogTitle>
+		<mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+			<span class="title dialog-title">{{ 'CONTENT.ADD_YOUTUBE' | translate }}</span>
+			<button mat-button class="mat-icon-button" [mat-dialog-close]="" aria-label="Close dialog">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-toolbar-row>
+	</mat-toolbar>
+	<div mat-dialog-content class="popup-content">
+		<div class="search-row">
+			<mat-form-field class="search-input">
+				<mat-icon matSuffix>search</mat-icon>
+				<input matInput (keyup.enter)="search()" [(ngModel)]="searchString" placeholder="{{ 'CONTENT.SEARCH' | translate }}">
+			</mat-form-field>
+		</div>
+		<div *ngIf="!youtubeList.length" class="not-found-title mat-h2">
+			{{ 'MESSAGES.NO_VIDEO_FOUND' | translate }}
+		</div>
+		<div *ngIf="youtubeList.length" class="video-row">
+			<div class="video-list" fusePerfectScrollbar>
+				<mat-card *ngFor="let video of youtubeList" class="video" [class.selected]="video.selected" (click)="selectVideo($event, video)">
+					<div class="thumbnail" [ngStyle]="{'background-image': 'url(' + video.snippet.thumbnails.medium.url + ')'}"></div>
+					<div class="video-data">
+						<span class="title">{{ video.snippet.title }}</span>
+						<span class="channel-title">{{ video.snippet.channelTitle }}</span>
+						<span *ngIf="video.snippet.description" class="description">{{ video.snippet.description }}</span>
+						<span *ngIf="video.details" class="duration">{{ convertDuration(video.details.duration) }}</span>
+					</div>
+				</mat-card>
+			</div>
+			<div class="video-preview">
+				<div class="frame">
+					<iframe *ngIf="selectedVideoId" class="video-frame" [src]="safeUrl" frameborder="0" allow="autoplay; encrypted-media">
+					</iframe>
+				</div>
+				<div class="video-list" fusePerfectScrollbar>
+					<mat-card *ngFor="let video of selectedYoutubeVideos" class="video" (click)="selectVideo($event, video)">
+						<div class="thumbnail" [ngStyle]="{'background-image': 'url(' + video.snippet.thumbnails.medium.url + ')'}"></div>
+						<div class="video-data">
+							<span class="title">{{ video.snippet.title }}</span>
+							<span class="channel-title">{{ video.snippet.channelTitle }}</span>
+							<span *ngIf="video.snippet.description" class="description">{{ video.snippet.description }}</span>
+							<span *ngIf="video.details" class="duration">{{ convertDuration(video.details.duration) }}</span>
+						</div>
+						<button mat-icon-button (click)="deleteFromSelected(video)">
+							<mat-icon>delete</mat-icon>
+						</button>
+					</mat-card>
+				</div>
+			</div>
+		</div>
+		<div class="actions">
+			<div class="page-actions">
+				<button [disabled]="!youtubeResult || !youtubeResult.prevPageToken" mat-button (click)="prevPage()">{{
+					'BUTTONS.PREV' | translate }}</button>
+				<button [disabled]="!youtubeResult || !youtubeResult.nextPageToken" [class.disabled]="!youtubeResult || !youtubeResult.nextPageToken"
+				 mat-button (click)="nextPage()">{{ 'BUTTONS.NEXT' | translate }}</button>
+			</div>
+			<div class="popup-actions">
+				<div #googleLogin class="g-signin2"></div>
+				<button [disabled]="!selectedYoutubeVideos.length" [class.disabled]="!selectedYoutubeVideos.length" mat-button
+				 (click)="save()">{{ 'BUTTONS.APPLY' | translate }}</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+<div class="nav">
+    <div *ngFor="let folder of nodes" (click)="toggleChildren(folder, $event); onSelect(folder);">
+        <div *ngIf="!folder.selected" class="nav-item" aria-label="inbox">
+            <a class="nav-link" [class.selected]="folder.isSelected">
+                <mat-icon *ngIf="!folder.children.length" class="collapse-arrow-hidden">keyboard_arrow_right</mat-icon>
+                <mat-icon *ngIf="folder.children.length" class="collapse-arrow" [class.closed]="!folder.isExpanded" [class.opened]="folder.isExpanded">keyboard_arrow_right</mat-icon>
+                <mat-icon class="nav-link-icon">folder</mat-icon>
+                <span [class.selected]="folder.isSelected" class="title">{{ folder.name }}</span>
+            </a>
+            <div>
+                <app-tree-view *ngIf="folder.isExpanded" [isMove]="isMove" [nodes]="folder.children" (select)="onSelect($event)"></app-tree-view>
+            </div>
+        </div>
+    </div>
+</div>

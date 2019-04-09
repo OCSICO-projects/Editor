@@ -1,0 +1,25 @@
+<div class="dialog-content-wrapper">
+	<mat-toolbar matDialogTitle>
+		<mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+			<span class="title dialog-title">{{ 'CONTENT.CHANGE_LOCATION' | translate }}</span>
+			<button mat-button class="mat-icon-button" [mat-dialog-close]="" (click)="closeDialog()" aria-label="Close dialog">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-toolbar-row>
+	</mat-toolbar>
+	<div mat-dialog-content fxLayout="column" fxLayoutAlign="space-between" class="mat-h4 content-dialog">
+		<h2 class="mat-h1">Location: {{ selectedFolderName }}</h2>
+		<div class="popup-content">
+			<app-tree-view 
+				[isMove]="true" 
+				[nodes]="folderList" 
+				*ngIf="folderList" 
+				(select)="onSelectFolder($event)"
+			>
+			</app-tree-view>
+		</div>
+	</div>
+	<div class="button-block">
+		<button mat-button mat-raised-button class="btn" (click)="applyChanges()">{{ 'BUTTONS.APPLY' | translate }}</button>
+	</div>
+</div>

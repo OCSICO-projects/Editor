@@ -1,0 +1,57 @@
+<div id="general-settings" tourAnchor="editor-general-settings">
+
+	<div class="mat-h2">{{ 'EDITOR.PROPERTIES.GENERAL' | translate }}</div>
+
+	<div class="card">
+		<div class="card-title" fxLayout="row" fxLayoutAlign="space-between center">
+			<div fxLayout="row" fxLayoutAlign="start center">
+				<p>{{ 'EDITOR.PROPERTIES.SETTINGS' | translate }}</p>
+			</div>
+			<button mat-icon-button aria-label="expand card" (click)="isAreaExpanded = !isAreaExpanded">
+				<mat-icon *ngIf="isAreaExpanded">keyboard_arrow_up</mat-icon>
+				<mat-icon *ngIf="!isAreaExpanded">keyboard_arrow_down</mat-icon>
+			</button>
+		</div>
+		<div class="card-expand-area" *ngIf="isAreaExpanded">
+			<!-- @TODO US-364 Show Template - need to hide it temporarily -->
+			<!-- <div class="card-expanded-content">
+                <app-editor-templates></app-editor-templates>
+            </div> -->
+			<div class="card-expanded-content">
+				<app-editor-grid></app-editor-grid>
+			</div>
+			<div class="card-expanded-content">
+				<mat-label class="long-sub-title">{{ 'EDITOR.PROPERTIES.BACKGROUND' | translate }}</mat-label>
+				<input 
+					*ngIf="cpPosition === 'bottom'" 
+					#backgroundColor 
+					type="text" 
+					cpPosition="bottom" 
+					matInput 
+					readonly 
+					class="input-picker"
+					[(colorPicker)]="slide.backgroundColor" 
+					[style.background]="slide.backgroundColor" 
+					(colorPickerChange)="setBackgroundColor(slide.backgroundColor)"
+					(cpToggleChange)="$event ? void : editorService.pushHistoryState()"
+				>
+
+				<input 
+					*ngIf="cpPosition === 'top'" 
+					#backgroundColor 
+					type="text" 
+					cpPosition="top" 
+					matInput 
+					readonly 
+					class="input-picker"
+					[(colorPicker)]="slide.backgroundColor" 
+					[style.background]="slide.backgroundColor" 
+					(colorPickerChange)="setBackgroundColor(slide.backgroundColor)"
+					(cpToggleChange)="$event ? void : editorService.pushHistoryState()"
+				>
+				<p class="input-picker-text">{{slide.backgroundColor}}</p>
+
+			</div>
+		</div>
+	</div>
+</div>

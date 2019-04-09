@@ -1,0 +1,38 @@
+<div class="modal-header">
+	<div class="title">{{ 'EDITOR.SLIDES.PREVIEW' | translate }}: {{ currentSlide.general.name }}</div>
+	<button mat-button class="mat-icon-button" (click)="toggleFullScreenMode()">
+		<mat-icon>{{ fullScreenMode ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+	</button>
+	<button mat-dialog-close="" mat-button class="mat-icon-button">
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
+<div class="modal-body">
+	<div class="preview">
+
+		<div class="portait-device-container">
+			<div class="portait-device">
+				<div class="portait-player-container">
+					<div class="portait-player">
+						<div class="display-area">
+							<canvas [width]="canvasWidth" [height]="canvasHeight" #canvasPortait></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="landscape-device-container">
+			<div class="landscape-device">
+				<div class="landscape-player-container">
+					<div class="landscape-player">
+						<div class="display-area">
+							<canvas [width]="canvasWidth" [height]="canvasHeight" #canvasLandscape></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>

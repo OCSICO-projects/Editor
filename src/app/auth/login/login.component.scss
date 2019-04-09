@@ -1,0 +1,51 @@
+@import 'src/styles/variables.scss';
+@import 'src/styles/mixins-breakpoint.scss';
+
+.login-wrapper {
+	height: 100vh;
+	position: relative;
+	background: url('/assets/images/backgrounds/winter.jpg') fixed center / cover no-repeat;
+
+	.login-container {
+		width: 600px;
+		box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+		background-color: mat-contrast($primary, 500);
+		
+		@include media-breakpoint-down('xs') {
+			width: 90%;
+		}
+
+		.form {
+			padding: 35px;
+			text-align: center;
+
+			.form__description {
+				color: black;
+				width: 100%;
+				text-align: center;
+				font-size: 18px;
+				margin-bottom: 3.2rem!important;
+				margin-top: 20px;
+			}
+
+			.full-width {
+				width: 100%;
+			}
+
+			.form__submit-button {
+				width: 60%;
+				margin-top: 50px;
+				box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+				transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+			}
+		}
+	}
+}
+
+.project-version {
+	position: absolute;
+	bottom: 5px;
+	right: 10px;
+	margin: 0;
+}
+

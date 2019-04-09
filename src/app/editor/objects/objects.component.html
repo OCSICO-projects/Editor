@@ -1,0 +1,106 @@
+<div class="mat-h2">Added Objects</div>
+
+<div *ngIf="formObjects.length" class="objects-group objects-group--html">
+	<app-editor-object-form-group 
+		*ngIf="formGroup" 
+		[object]="formGroup" 
+		[isActive]="selectedObject === formGroup"
+	>
+	</app-editor-object-form-group>
+
+	<ng-container *ngFor="let object of formObjects">
+		<app-editor-object-button 
+			*ngIf="isButton(object)" 
+			[object]="object" 
+			[isActive]="selectedObject === object"
+		>
+		</app-editor-object-button>
+
+		<app-editor-object-social-button 
+			*ngIf="isSocialButton(object)" 
+			[object]="object" 
+			[isActive]="selectedObject === object"
+		>
+		</app-editor-object-social-button>
+
+		<app-editor-object-rating 
+			*ngIf="isRating(object)" 
+			[object]="object" 
+			[isActive]="selectedObject === object"
+		>
+		</app-editor-object-rating>
+
+		<app-editor-object-comment 
+			*ngIf="isComment(object)" 
+			[object]="object" 
+			[isActive]="selectedObject === object"
+		>
+		</app-editor-object-comment>
+
+		<app-editor-object-input 
+			*ngIf="isInput(object)" 
+			[object]="object" 
+			[isActive]="selectedObject === object"
+		>
+		</app-editor-object-input>
+	</ng-container>
+</div>
+
+<div *ngIf="simpleHtmlObjects.length" class="objects-group objects-group--html">
+	<ng-container *ngFor="let object of simpleHtmlObjects">
+		<app-editor-object-youtube 
+			*ngIf="isYoutube(object)" 
+			[object]="object" 
+			[isActive]="selectedObject === object"
+			[previewSrc]="object.previewUrl"
+		>
+		</app-editor-object-youtube>
+	</ng-container>
+</div>
+
+<div
+	class="objects-wrapper"
+	ngxDroppable="object-layers"
+	[model]="simpleObjects"
+	(drop)="editorService.pushHistoryState(simpleObjects)">
+
+	<div
+		*ngFor="let object of simpleObjects"
+		ngxDraggable
+		[model]="object"
+		class="draggable-object"
+		dropZones="object-layers"
+		 id="{{object.id}}" 
+		 [hidden]="!isDraggable(object)">
+
+		<app-editor-object-text 
+			*ngIf="isText(object)" 
+			[object]="object" 
+			[isActive]="selectedObject === object"
+		>
+		</app-editor-object-text>
+
+		<app-editor-object-shape 
+			*ngIf="isShape(object)" 
+			[object]="object" 
+			[isActive]="selectedObject === object"
+		>
+		</app-editor-object-shape>
+
+		<app-editor-object-image 
+			*ngIf="isImage(object)" 
+			[object]="object" 
+			[isActive]="selectedObject === object"
+			[previewSrc]="object.previewUrl"
+		>
+		</app-editor-object-image>
+
+		<app-editor-object-video 
+			*ngIf="isVideo(object)" 
+			[object]="object" 
+			[isActive]="selectedObject === object"
+			[previewSrc]="object.previewUrl"
+		>
+		</app-editor-object-video>
+	</div>
+</div>

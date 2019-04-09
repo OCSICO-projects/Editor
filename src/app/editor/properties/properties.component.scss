@@ -1,0 +1,54 @@
+@import 'src/styles/variables.scss';
+
+mat-tab-group {
+	height: 100%;
+
+  ::ng-deep {
+    .mat-tab-label {
+      height: 64px;
+    }
+
+    .mat-tab-header-pagination {
+      display: none;
+    }
+
+    .mat-tab-body-wrapper {
+			height: 100%;
+      background-color: $light-grey-color;
+    }
+
+  	.mat-tab-body-content {
+			padding: 0 20px 0 20px;
+			
+			.h2, .mat-h2 {
+				padding-top: 15px;
+			}
+		}
+
+    .mat-checkbox-layout {
+      display: flex;
+    }
+
+    .mat-tab-body.mat-tab-body-active {
+      overflow: hidden;
+    }
+
+    .mat-form-field-infix {
+      width: auto;
+    }
+  }
+}
+
+.mat-checkbox {
+  ::ng-deep {
+    .mat-checkbox-layout {
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    .mat-checkbox-inner-container {
+      margin: auto;
+      margin-right: 0;
+    }
+  }
+}

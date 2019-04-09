@@ -1,0 +1,48 @@
+<div class="login-wrapper" fxFlex="100%" fxLayoutAlign="center center">
+
+	<div class="login-container" fxLayoutAlign="center center">
+
+		<form
+      fxLayout="column"
+      fxFlex="100%"
+      fxLayoutAlign="center center"
+      class="form"
+      [formGroup]="form"
+      (submit)="onSubmit()">
+
+			<p class="form__description mat-h2">Sign into your account</p>
+
+			<mat-form-field class="full-width">
+				<input type="text" matInput placeholder="Email" formControlName="email">
+				<mat-error *ngIf="form.get('email').hasError('required') && form.get('email').touched">
+					Email is required
+				</mat-error>
+				<mat-error *ngIf="form.get('email').hasError('pattern') && form.get('email').touched">
+					Email is not valid
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field class="full-width">
+				<input type="password" matInput placeholder="Password" formControlName="password">
+				<mat-error *ngIf="form.get('password').hasError('required') && form.get('password').touched">
+					Password is required
+				</mat-error>
+				<mat-error *ngIf="form.get('password').hasError('minlength') && form.get('password').touched">
+					Minimum 8 symbols
+				</mat-error>
+			</mat-form-field>
+
+			<button
+				mat-button
+				mat-raised-button
+				type="submit"
+				color="accent"
+				class="form__submit-button"
+				>Sign In</button>
+		</form>
+	</div>
+
+	<div class="project-version mat-h2">
+		V0.0.9
+	</div>
+</div>

@@ -1,0 +1,18 @@
+@import 'src/styles/variables.scss';
+
+.text-field {
+  margin: -10px 0 !important;
+}
+
+.button {
+  background: white;
+  box-shadow: none;
+  border: 1px solid $canvas-bg-color;
+  outline: none;
+  margin: 0px 0px 2px 2px;
+
+  &:active {
+    background-color: $canvas-bg-color;
+    border: 1px solid $canvas-bg-color;
+  }
+}

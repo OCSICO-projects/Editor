@@ -1,0 +1,138 @@
+@import 'src/styles/variables.scss';
+@import 'src/styles/mixins-breakpoint.scss';
+
+.editor-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+  padding: 0 28px 0 14px;
+  flex: 0 0 96px;
+  background-color: mat-color($primary, 900);
+
+  .history-actions {
+    margin-left: 60px;
+    white-space: nowrap;
+
+    .history-action {
+      &--disabled {
+        mat-icon {
+          color: $history-action-color;
+        }
+      }
+  	}
+  }
+
+  .title-block {
+		color: mat-contrast($primary, 500);
+		margin: 8px;
+		
+		span {
+			p:first-letter {
+				text-transform: capitalize;
+			}
+		}
+
+		.view-slide {
+			margin-left: 70px;
+			.mat-icon-button {
+				color: mat-contrast($primary, 500);
+				font-size: mat-font-size($typography, body-2);
+	
+				mat-icon {
+					margin-right: 10px;
+				}
+			}
+		}
+  }
+
+  mat-icon {
+		color: mat-contrast($primary, 500);
+  }
+
+  .controls {
+    margin-right: 45px;
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+
+    .mat-icon-button {
+      width: 45px;
+      height: 45px;
+		}
+		
+    mat-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+		}
+  }
+
+  .new-base-object-button {
+    position: absolute;
+    bottom: -28px;
+    left: 380px;
+    z-index: 999;
+    background-color: mat-color($accent);
+  }
+
+  .submit {
+    color: mat-color($warn, A200);
+		background-color: mat-color($accent);
+		
+		&:hover {
+			opacity: .8;
+		}	
+	}
+}
+
+.editor {
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  overflow: hidden;
+
+  .properties {
+		width: 340px;
+		background-color: mat-contrast($primary, 500);
+		
+		@include media-breakpoint-down('lg') {
+			width: 300px;
+		}
+  }
+
+  .workspace {
+    position: relative;
+    flex: 1 1;
+		min-width: 600px;
+		
+		@include media-breakpoint-down('lg') {
+			min-width: 400px;
+		}
+  }
+
+  .objects {
+		width: 320px;
+    padding: 30px 20px 0;
+    background-color: $light-grey-color;
+		overflow: auto;
+		
+		@include media-breakpoint-down('lg') {
+			width: 240px;
+		}
+  }
+}
+
+.project-version {
+	position: absolute;
+	bottom: 5px;
+	right: 10px;
+	margin: 0;
+}

@@ -1,0 +1,116 @@
+<div id="content-manager-popup" class="page-layout simple right-sidenav">
+
+	<mat-sidenav-container>
+		<!-- CENTER -->
+		<div class="center" fxFlex>
+			<div>
+				<!-- HEADER -->
+				<div class="header mat-accent-bg" fxLayout="row" fxLayoutAlign="space-between">
+
+					<!-- BREADCRUMB -->
+					<div class="breadcrumb text-truncate mat-h1" fxLayout="row" fxLayoutAlign="start center">
+						<div
+							*ngFor="let path of pathArr; last as isLast"
+							fxLayout="row"
+							fxLayoutAlign="start center"
+							>
+							<span *ngIf="isLast; else activeBreadcrumb" class="breadcrumb-item breadcrumb-item-last">
+								{{path.name}}
+							</span>
+							<ng-template #activeBreadcrumb>
+								<span (click)="selectBreadCrumb(path)" class="breadcrumb-item">
+									{{path.name}}
+								</span>
+								<mat-icon class="separator">chevron_right</mat-icon>
+							</ng-template>
+						</div>
+					</div>
+					<!-- / BREADCRUMB -->
+
+					<!-- TOOLBAR -->
+					<div class="toolbar" fxFlex fxLayout="row" fxLayoutAlign="end center">
+						<div class="right-side" fxLayout="row">
+							<button mat-button class="btn apply demo-button" (click)="addFile()" type="button">
+								{{!dialogOption.flag ? 'Add to Slide' : 'Open slide'}}
+							</button>
+							<button mat-icon-button (click)="viewTypeToggle = !viewTypeToggle" class="demo-hoverable">
+								<mat-icon>{{viewTypeToggle ? 'view_list' : 'view_module'}}</mat-icon>
+							</button>
+							<button (click)="onClose()" mat-dialog-close="" mat-button class="mat-icon-button demo-hoverable">
+								<mat-icon>close</mat-icon>
+							</button>
+						</div>
+					</div>
+					<!-- / TOOLBAR -->
+
+					<!-- ADD FILE BUTTON -->
+					<button [matMenuTriggerFor]="menu" mat-fab class="add-file-button demo-button">
+						<mat-icon>add</mat-icon>
+					</button>
+
+					<mat-menu #menu class="mat-menu-objects" [overlapTrigger]="false">
+						<div class="file-uploader" *ngIf="!dialogOption.flag">
+							<input hidden type="file" (change)="uploadFile($event.target.files)" #fileInput>
+							<button mat-menu-item (click)="fileInput.click()">
+								<mat-icon>insert_drive_file</mat-icon>
+								Upload File
+							</button>
+						</div>
+						<button mat-menu-item (click)="openContentDialog(1)">
+							<mat-icon class="text_fields">folder</mat-icon>
+							Create Folder
+						</button>
+						<button mat-menu-item (click)="openYouTubeDialog()" *ngIf="!dialogOption.flag">
+							<mat-icon class="text_fields">folder</mat-icon>
+							{{ 'CONTENT.ADD_YOUTUBE' | translate }}
+						</button>
+					</mat-menu>
+
+					<!-- / ADD FILE BUTTON -->
+
+				</div>
+				<!-- / HEADER -->
+
+				<!-- CONTENT -->
+				<div #dropContentElement class="content drop">
+					<app-progress-bar [isLoad]="isLoad"></app-progress-bar>
+					<div class="content-view" *ngIf="isLoad">
+						<div class="content" *ngIf="!viewTypeToggle; else tile">
+							<content-list
+								[copiedNode]="copiedNode"
+								[listResources]="listResources"
+								[isLoad]="isLoad"
+								[dialogOptions]="dialogOptions.flag"
+								(moveNode)="changeNodeLocation($event)"
+								(renameNode)="renameNode($event)"
+								(pasteNode)="onPasteNode($event)"
+								(copyNode)="onCopyNode($event)"
+								(deleteNode)="deleteContentNode($event)"
+								(onShowNodeEmitter)="handleShowNode($event)">
+							</content-list>
+						</div>
+						<ng-template #tile>
+							<content-tile
+								[copiedNode]="copiedNode"
+								[listResources]="listResources"
+								[isLoad]="isLoad"
+								[dialogOptions]="dialogOptions.flag"
+								(moveNode)="changeNodeLocation($event)"
+								(renameNode)="renameNode($event)"
+								(pasteNode)="onPasteNode($event)"
+								(copyNode)="onCopyNode($event)"
+								(deleteNode)="deleteContentNode($event)"
+								(onShowNodeEmitter)="handleShowNode($event)">
+							</content-tile>
+						</ng-template>
+					</div>
+				</div>
+
+				<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+				</mat-paginator>
+			</div>
+
+		</div>
+		<!-- / CENTER -->
+	</mat-sidenav-container>
+</div>

@@ -1,0 +1,122 @@
+@import "src/styles/mixins-breakpoint";
+@import 'src/styles/variables.scss';
+
+content-popup {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+#content-manager-popup {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  .content-view {
+		height: 100%;
+		overflow: auto;
+  }
+
+  mat-sidenav-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    > .mat-sidenav-content,
+    > .mat-drawer-content {
+				z-index: 1;
+				overflow: hidden;
+
+        .center {
+          justify-content: space-between;
+
+          .header {
+            position: relative;
+            height: 80px;
+            min-height: 80px;
+            max-height: 80px;
+            background: mat-color($primary);
+            padding: 16px;
+            color: mat-contrast($primary, 500);
+
+            @include media-breakpoint-down('sm') {
+              height: 80px;
+              min-height: 80px;
+              max-height: 80px;
+            }
+
+            .breadcrumb {
+              margin-left: 72px;
+              margin-bottom: 0;
+
+                &-item {
+                  cursor: default;
+                  &:not(.breadcrumb-item-last) {
+                    cursor: pointer;
+                    &:hover {
+                      color: mat-color($grey, 300)
+                    }
+                  }
+                }
+
+            	mat-icon {
+                color: mat-contrast($primary, 500);
+              }
+            }
+
+            .add-file-button {
+              position: absolute;
+              bottom: -28px;
+              left: 16px;
+              z-index: 999;
+
+              mat-icon {
+                color: mat-contrast($primary, 500);
+              }
+						}
+        	}
+
+          .content {
+            max-height: calc(67vh - 80px);
+            align-content: stretch;
+            align-items: stretch;
+            flex-direction: column;
+            flex: 1;
+            display: flex;
+						align-self: stretch;
+					}
+          .button-block {
+            padding: 15px;
+          }
+        }
+      }
+    }
+
+    .apply {
+      background-color: mat-color($accent);
+      color: mat-contrast($primary, 500);
+      margin-right: 16px;
+    }
+
+    .toolbar {
+      .right-side {
+        .demo-button {
+					background-color: mat-color($accent);
+
+          mat-icon {
+            color: mat-contrast($primary, 500);
+          }
+        }
+        .demo-hoverable {
+					margin-right: 12px;
+
+          mat-icon {
+            color: mat-contrast($primary, 500);
+          }
+				}
+        .close {
+          margin: 0 10px;
+        }
+    	}
+    }
+}

@@ -1,0 +1,19 @@
+<mat-tab-group mat-stretch-tabs>
+	<mat-tab label="{{'EDITOR.FORMAT' | translate}}">
+
+		<app-editor-social-settings></app-editor-social-settings>
+		<app-editor-connect-settings></app-editor-connect-settings>
+		<app-editor-text-settings></app-editor-text-settings>
+		<app-editor-shape-settings></app-editor-shape-settings>
+		<app-editor-object-settings></app-editor-object-settings>
+		<app-editor-general-settings></app-editor-general-settings>
+
+	</mat-tab>
+	<mat-tab label="{{'EDITOR.ANIMATE' | translate}}" [disabled]="!selectedObject || !isAnimationAvailable()">
+		<app-editor-animations 
+			*ngIf="selectedObject && isAnimationAvailable()" 
+			[object]="selectedObject"
+		>
+		</app-editor-animations>
+	</mat-tab>
+</mat-tab-group>

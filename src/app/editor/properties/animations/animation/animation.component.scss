@@ -1,0 +1,51 @@
+@import 'src/styles/variables.scss';
+
+::ng-deep {
+  .mat-input-wrapper {
+    font-size: 14px;
+  }
+}
+
+.animation-type {
+  width: 100%;
+}
+
+.animation-property-row {
+  justify-content: space-between;
+
+  .animation-property-value {
+    width: 6em;
+    text-align: center;
+  }
+
+  ::ng-deep {
+    .mat-select-value {
+      .mat-select-value-text {
+        padding: 0 7px;
+      }
+    }
+	}
+}
+
+.animation-preview-button {
+  width: 100%;
+	height: 50px;
+	background-color: $canvas-bg-color;
+	
+  mat-icon {
+    display: inline;
+		font-size: 40px;
+		color: mat-contrast($primary, 50);
+  }
+}
+
+.animation-preview-button-disabled {
+  width: 100%;
+	height: 50px;
+	
+  mat-icon {
+    display: inline;
+    font-size: 40px;
+    color: mat-contrast($accent, 500);
+  }
+}

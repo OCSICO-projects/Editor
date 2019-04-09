@@ -1,0 +1,27 @@
+@import 'src/styles/variables.scss';
+
+.card {
+	margin-bottom: 50px;
+	
+	.player-visible {
+		display: none;
+	}
+}
+
+.animation-preview-player {
+  width: 100%;
+  height: 250px;
+	background-color: mat-contrast($accent, 500);
+
+	canvas {
+		z-index: -1;
+	}
+
+	.preview-visible {
+		z-index: 1;
+	}
+}
+
+:host ::ng-deep .canvas-container {
+	width: 100% !important;
+}

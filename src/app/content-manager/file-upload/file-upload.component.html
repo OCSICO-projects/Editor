@@ -1,0 +1,24 @@
+<div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+	<mat-list>
+		<mat-list-item *ngFor="let file of filesUpload">
+			<div class="preload-elem">
+				<div>
+					<div class="upload-title">
+						<h4 mat-line>{{ file.name| ellipsisText: 30 }}</h4>
+						<h4 class="complete-title" *ngIf="progressPercents[file.name].complete && !progressPercents[file.name].rejected">{{
+							'CONTENT.UPLOAD_COMPLETE' | translate }}</h4>
+						<h4 class="complete-title" *ngIf="progressPercents[file.name].progress === 100 && !progressPercents[file.name].complete && !progressPercents[file.name].rejected">{{
+							'CONTENT.PENDING' | translate }}</h4>
+						<h4 class="complete-title" *ngIf="progressPercents[file.name].rejected">{{ 'CONTENT.ERROR' | translate }}</h4>
+					</div>
+					<mat-progress-bar mode="determinate" value="{{ progressPercents[file.name].progress }}"></mat-progress-bar>
+				</div>
+				<div class="action">
+					<button (click)="cancelUpload(file)" mat-icon-button>
+						<mat-icon>close</mat-icon>
+					</button>
+				</div>
+			</div>
+		</mat-list-item>
+	</mat-list>
+</div>

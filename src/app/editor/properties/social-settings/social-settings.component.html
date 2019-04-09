@@ -1,0 +1,116 @@
+<div *ngIf="isSocialButtonSelected()">
+    <div class="mat-h2">{{ 'EDITOR.OBJECTS.BUTTON' | translate }}</div>
+    <div class="card">
+        <div class="card-title" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <p>{{ 'EDITOR.PROPERTIES.BUTTON_PROPERTIES' | translate }}</p>
+            </div>
+
+            <button mat-icon-button aria-label="expand card" (click)="socialEditorExpanded = !socialEditorExpanded">
+                <mat-icon *ngIf="socialEditorExpanded">keyboard_arrow_up</mat-icon>
+                <mat-icon *ngIf="!socialEditorExpanded">keyboard_arrow_down</mat-icon>
+            </button>
+        </div>
+        <div class="card-expand-area" *ngIf="socialEditorExpanded">
+            <div class="card-expanded-content shape-parameter">
+                <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.SHAPE' | translate }}</mat-label>
+                <mat-select
+                    class="input"
+                    placeholder="{{ 'EDITOR.PROPERTIES.SHAPE' | translate }}"
+                    [value]="selectedObject.shape"
+                    (selectionChange)="changeShape($event.value)"
+                >
+                    <mat-option value="square">{{'EDITOR.PROPERTIES.SHAPES.SQUARE' | translate }}</mat-option>
+                    <mat-option value="rectangle">{{'EDITOR.PROPERTIES.SHAPES.RECTANGLE' | translate }}</mat-option>
+                    <mat-option value="circle">{{'EDITOR.PROPERTIES.SHAPES.CIRCLE' | translate }}</mat-option>
+                </mat-select>
+            </div>
+
+            <div class="card-expanded-content">
+                <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.ACTION' | translate }}</mat-label>
+                <mat-select
+                    class="input"
+                    [(ngModel)]="selectedObject.action.accessType"
+                    placeholder="{{ 'EDITOR.PROPERTIES.ACTION' | translate }}"
+                    (selectionChange)="pushHistoryState()"
+                >
+                    <mat-option value="login">{{'EDITOR.PROPERTIES.ACTIONS.LOGIN' | translate }}</mat-option>
+                    <mat-option value="post">{{'EDITOR.PROPERTIES.ACTIONS.POST' | translate }}</mat-option>
+                    <mat-option value="follow">{{'EDITOR.PROPERTIES.ACTIONS.FOLLOW' | translate }}</mat-option>
+                    <mat-option value="like">{{'EDITOR.PROPERTIES.ACTIONS.LIKE' | translate }}</mat-option>
+                </mat-select>
+            </div>
+
+            <ng-template [ngIf]="selectedObject.action.accessType === 'post'">
+                <div class="card-expanded-content">
+                    <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.PAGE_TO_POST' | translate }}</mat-label>
+                    <mat-form-field>
+                        <input
+                            matInput
+                            type="text"
+                            [(ngModel)]="selectedObject.action.post.page"
+                            (keyup.enter)="pushHistoryState()"
+                            (blur)="pushHistoryState()"
+                        >
+                    </mat-form-field>
+                </div>
+
+                <div class="card-expanded-content">
+                    <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.TEXT_TO_POST' | translate }}</mat-label>
+                    <mat-form-field>
+                        <input
+                            matInput
+                            type="text"
+                            [(ngModel)]="selectedObject.action.post.text"
+                            (keyup.enter)="pushHistoryState()"
+                            (blur)="pushHistoryState()"
+                        >
+                    </mat-form-field>
+                </div>
+
+                <div class="card-expanded-content">
+                    <mat-checkbox
+                        [(ngModel)]="selectedObject.action.post.imageEnabled"
+                        class="long-sub-title"
+                        labelPosition="before"
+                        (change)="pushHistoryState()"
+                    >
+                        {{ 'EDITOR.PROPERTIES.IMAGE' | translate }}
+                    </mat-checkbox>
+                </div>
+
+                <div *ngIf="selectedObject.action.post.imageEnabled" class="card-expanded-content">
+                    <div class="image-preview" (click)="openSelectImageDialog()">
+                        <img *ngIf="selectedObject.action.post.image" [src]="selectedObject.action.post.image">
+                    </div>
+                </div>
+            </ng-template>
+
+            <div *ngIf="selectedObject.action.accessType === 'like'" class="card-expanded-content">
+                <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.PAGE_TO_LIKE' | translate }}</mat-label>
+                <mat-form-field>
+                    <input
+                        matInput
+                        type="text"
+                        [(ngModel)]="selectedObject.action.like.page"
+                        (keyup.enter)="pushHistoryState()"
+                        (blur)="pushHistoryState()"
+                    >
+                </mat-form-field>
+            </div>
+
+            <div class="card-expanded-content">
+                <mat-label class="sub-title">{{ 'EDITOR.PROPERTIES.REDIRECT_URL' | translate }}</mat-label>
+                <mat-form-field>
+                    <input
+                        matInput
+                        type="text"
+                        [(ngModel)]="selectedObject.action.redirectUrl"
+                        (keyup.enter)="pushHistoryState()"
+                        (blur)="pushHistoryState()"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="logout-wrapper" (clickOutside)="onClickedOutside($event)">
+	<div class="logout-content" [class.logout-visible]="visible">
+		<div class="user-wrapper" fxLayoutAlign="center center">
+			
+			<div class="user-avatar" fxLayoutAlign="center" fxFlex="30%">
+				<p class="user-name">{{user?.avatar_name}}</p>
+			</div>
+
+			<div class="user-info" fxFlex="70%">
+				<p class="user-name mat-subheading-2">{{user?.name}}</p>
+				<p class="user-email mat-subheading-2">{{user?.email}}</p>
+			</div>
+		</div>
+
+		<div class="button-block" fxLayoutAlign="flex-end">
+			<button 
+				mat-button 
+				mat-raised-button 
+				class="sign-out" 
+				(click)="logout()">
+				Sign Out
+			</button>
+		</div>
+	</div>
+
+	<button 
+		fxLayoutAlign="center center" 
+		class="logout mat-icon-button" 
+		(click)="visible = !visible"
+		>
+		<mat-icon>account_circle</mat-icon>
+	</button>
+</div>

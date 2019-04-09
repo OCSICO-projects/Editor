@@ -1,0 +1,56 @@
+@import 'src/styles/variables.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  background-color: mat-color($primary);
+  padding: 12px;
+
+  .title {
+    flex: 1;
+    padding: 0 10px;
+    line-height: 1.15em;
+    font-size: 18px;
+    color: mat-contrast($primary, 500);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+	flex: 1;
+	
+  .form {
+    padding: 20px;
+    flex: 1;
+
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: left;
+      line-height: 1em;
+
+      .cancel {
+        margin: 0 10px;
+      }
+
+      .submit {
+				color: mat-contrast($primary, 500);
+      	background-color: mat-color($accent);
+      }
+    }
+  }
+}

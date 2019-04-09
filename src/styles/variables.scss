@@ -1,0 +1,27 @@
+@import '~@angular/material/theming';
+@import 'palettes';
+
+$canvas-bg-color: #c5c6cb;
+$history-action-color: #aaaaaa;
+$light-grey-color: #eeeeef;
+$general-setting-color: #e7e7e7;
+
+$primary: mat-palette($blue-palette);
+$accent: mat-palette($green-palette);
+$warn: mat-palette($red-palette);
+$grey: mat-palette($mat-grey);
+
+$typography: mat-typography-config(
+  $font-family: '"Roboto", "Helvetica Neue", "Arial", sans-serif',
+  $display-4: mat-typography-level(90px, 110px, 300),
+  $display-3: mat-typography-level(50px, 54px, 400),
+  $display-2: mat-typography-level(38px, 45px, 400),
+  $display-1: mat-typography-level(30px, 38px, 600),
+  $subheading-2: mat-typography-level(22px, 26px, 400),
+  $subheading-1: mat-typography-level(20px, 25px, 400),
+  $body-2: mat-typography-level(15px, 20px, 500),
+  $body-1: mat-typography-level(14px, 18px, 400),
+  $caption: mat-typography-level(12px, 20px, 400),
+  $button: mat-typography-level(14px, 20px, 400),
+  $title: mat-typography-level(18px, 22px, 400)
+);
