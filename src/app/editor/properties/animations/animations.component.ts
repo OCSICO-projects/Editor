@@ -57,13 +57,15 @@ export class AnimationsComponent implements OnInit, OnDestroy {
 	handleStartChange(animation: Animation) {
 		this.object.animations.start = animation;
 
-		if (animation && this.object.animations.end) {
-			this.object.animations.end.repetition = animation.repetition;
-		}
+		// TODO: WAT?
 
-		if (!animation && this.object.animations.end) {
-			this.object.animations.end.repetition = null;
-		}
+		// if (animation && this.object.animations.end) {
+		// 	this.object.animations.end.repetition = animation.repetition;
+		// }
+        //
+		// if (!animation && this.object.animations.end) {
+		// 	this.object.animations.end.repetition = null;
+		// }
 
 		this.editorService.pushHistoryState();
 	}
@@ -71,9 +73,11 @@ export class AnimationsComponent implements OnInit, OnDestroy {
 	handleEndChange(animation: Animation) {
 		this.object.animations.end = animation;
 
-		if (animation && this.object.animations.start) {
-			this.object.animations.end.repetition = this.object.animations.start.repetition;
-		}
+        // TODO: WAT?
+
+		// if (animation && this.object.animations.start) {
+		// 	this.object.animations.end.repetition = this.object.animations.start.repetition;
+		// }
 
 		this.editorService.pushHistoryState();
 	}

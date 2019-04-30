@@ -16,6 +16,17 @@ import { SharedModule } from '@app/shared/shared.module';
 import { EditorModule } from '@app/editor/editor.module';
 import { CoreModule } from '@app/core/core.module';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
+import { AngularLaravelEchoModule, SocketIoEchoConfig } from 'angular-laravel-echo';
+import { environment } from '@env/environment';
+
+export const echoConfig: SocketIoEchoConfig = {
+    userModel: 'App.User',
+    notificationNamespace: 'App\\Events',
+    options: {
+        broadcaster: 'socket.io',
+        host: environment.socketHost
+    }
+};
 
 @NgModule({
 	entryComponents: [
@@ -37,13 +48,14 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
 		AuthModule,
 		AppRoutingModule,
 		CoreModule,
-    TourMatMenuModule.forRoot()
+        TourMatMenuModule.forRoot(),
+        AngularLaravelEchoModule.forRoot(echoConfig)
 	],
 	bootstrap: [
 		AppComponent
 	],
 	providers: [
-		{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
+		{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }
 	]
 })
 export class AppModule {

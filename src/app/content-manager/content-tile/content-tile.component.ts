@@ -85,6 +85,9 @@ export class ContentTileComponent implements OnInit, OnDestroy {
 	}
 
 	public onSelect(node: Folder | Resource): void {
+	    if (node.disabled) {
+	        return;
+        }
 		this.contentManagerService.selectSlide(node);
 		let selectedNodes: any;
 		if (this.ctrlPressed && node.type !== this.contentTypeFolder) {
@@ -115,14 +118,30 @@ export class ContentTileComponent implements OnInit, OnDestroy {
 
 	public isEditable(row) {
 		const type = (row.type || '').toLowerCase();
-		return type === 'compose';
+		return type === 'compose' && !row.disabled;
 	}
 
-	public nodePreview(node: Node) { this.onShowNodeEmitter.emit(node); }
+	public nodePreview(node: Node) {
+        if (node.disabled) {
+            return;
+        }
 
-	public nodeEdit(node: Node) { this.editNode.emit(node); }
+	    this.onShowNodeEmitter.emit(node);
+	}
+
+	public nodeEdit(node: Node) {
+        if (node.disabled) {
+            return;
+        }
+
+        this.editNode.emit(node);
+	}
 
 	public nodeChoose(node) {
+        if (node.disabled) {
+            return;
+        }
+
 		if (this.isEditable(node)) {
 			this.nodeEdit(node);
 		} else {
@@ -164,6 +183,10 @@ export class ContentTileComponent implements OnInit, OnDestroy {
 			this.dialogRef.close(arrayItem);
 		}
 	}
+
+	public styleForItem(item) {
+
+    }
 
 	public ngOnDestroy(): void {
 		this.onDestroy$.next();

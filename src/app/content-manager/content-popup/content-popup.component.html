@@ -30,7 +30,13 @@
 					<!-- TOOLBAR -->
 					<div class="toolbar" fxFlex fxLayout="row" fxLayoutAlign="end center">
 						<div class="right-side" fxLayout="row">
-							<button mat-button class="btn apply demo-button" (click)="addFile()" type="button">
+							<button
+                                mat-button
+                                (click)="addFile()"
+                                [disabled]="!selected || selected.length === 0"
+                                class="btn apply demo-button"
+                                type="button"
+                            >
 								{{!dialogOption.flag ? 'Add to Slide' : 'Open slide'}}
 							</button>
 							<button mat-icon-button (click)="viewTypeToggle = !viewTypeToggle" class="demo-hoverable">

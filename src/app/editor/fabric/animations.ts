@@ -240,7 +240,7 @@ export default class {
     }
 
     static delay(object: fabric.Object, durationSec: number): Promise<void> {
-        // console.debug(`Running delay (id: ${this.animationId}) for ${durationSec} seconds: ${Math.round(performance.now() / 100) / 10}`);
+        console.debug(`Running delay (id: ${this.animationId}) for ${durationSec} seconds: ${Math.round(performance.now() / 100) / 10}`);
         return this.runAnimation(object, { opacity: object.opacity }, { duration: durationSec * 1000 });
     }
 }

@@ -82,6 +82,8 @@ export class ObjectAbstractComponent implements OnInit {
 				id: fabric.util.generateId(),
 			});
 
+            newObject.animations = JSON.parse(JSON.stringify(newObject.animations));
+
 			this.editorService.addObject(newObject);
 		});
 	}

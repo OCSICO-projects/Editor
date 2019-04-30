@@ -1,141 +1,144 @@
 @import 'src/styles/variables.scss';
 
 content-tile {
-  flex: 1;
-  display: flex;
+    flex: 1;
+    display: flex;
 }
 
 .content-tile-wrapper {
-  width: 100%;
+    width: 100%;
 }
 
-:host {     
-  .empty-title {
-    width: 100%;
-    color: $canvas-bg-color;
-    font-size: 35px;
-    text-align: center;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
+:host {
+    .empty-title {
+        width: 100%;
+        color: $canvas-bg-color;
+        font-size: 35px;
+        text-align: center;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
 
-    .sub-title-empty {
-      font-size: 20px;
+        .sub-title-empty {
+            font-size: 20px;
+        }
     }
-  }
 }
 
 .content {
-  flex: 1;
-  display: flex;
+    flex: 1;
+    display: flex;
 }
 
 .grid-wrapper {
-  background-color: mat-contrast($accent, 500);
-  width:100%;
+    background-color: mat-contrast($accent, 500);
+    width: 100%;
 }
 
 .grid-tile-container {
-  order: 1;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex-flow: row wrap;
-  align-content: flex-start;
-  padding: 0 0 20px 13px;
-  flex: 1;
-
-  .tile-ite {
-      cursor: pointer;
-  }
-
-  .tile {
-    width: 13.7em;
-    max-height: 13em;
+    order: 1;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    justify-content: left;
+    flex-direction: row;
     flex-wrap: wrap;
-    margin: 15px 5px 0 15px;
-    background: mat-contrast($accent, 500);
-    box-shadow: 0 1px 10px 3px rgb(233, 232, 232);
-    padding: 0;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    padding: 0 0 20px 13px;
+    flex: 1;
 
-    .media {
-    	height: 130px;
-      align-items: center;
-      justify-content: center;
-      display: flex;
-      min-width: 0;
-      width: 100%;
-      margin: 0;
-      text-align: center;
-      background-color: mat-contrast($accent, 500);
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
+    .tile-ite {
+        cursor: pointer;
     }
 
-    .no-image-background {
-      background-size: contain;
-    }
-
-    .preview {
-      width: 100%;
-      max-width: 100%;
-      height: 133px;
-      max-height: 133px;
-    }
-
-    .no-image {
-      width: 60%;
-      max-width: 60%;
-      height: 32px;
-    }
-
-    .mat-card { /* label [icon][title][menu] */
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      height: 3.8em;
-      padding: 10px 0;
-      margin-bottom: 12px;
-			cursor: pointer;
-			user-select: none;
-			
-      .mat-card-icon {
-        margin: 0 10px;
-			}
-			
-      .mat-card-tile-title {
-        padding: 3px 0 0 0;
-        flex: 1;
-			}
-			
-      .mat-card-menu-button {
+    .tile {
+        width: 13.7em;
+        max-height: 13em;
         display: flex;
-        align-items: center;
-      }
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 15px 5px 0 15px;
+        background: mat-contrast($accent, 500);
+        box-shadow: 0 1px 10px 3px rgb(233, 232, 232);
+        padding: 0;
+        transition: opacity .3s ease-in-out;
+
+        .media {
+            height: 130px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            min-width: 0;
+            width: 100%;
+            margin: 0;
+            text-align: center;
+            background-color: mat-contrast($accent, 500);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .no-image-background {
+            background-size: contain;
+        }
+
+        .preview {
+            width: 100%;
+            max-width: 100%;
+            height: 133px;
+            max-height: 133px;
+        }
+
+        .no-image {
+            width: 60%;
+            max-width: 60%;
+            height: 32px;
+        }
+
+        .mat-card { /* label [icon][title][menu] */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 3.8em;
+            padding: 10px 0;
+            margin-bottom: 12px;
+            user-select: none;
+
+            .mat-card-icon {
+                margin: 0 10px;
+            }
+
+            .mat-card-tile-title {
+                padding: 3px 0 0 0;
+                flex: 1;
+            }
+
+            .mat-card-menu-button {
+                display: flex;
+                align-items: center;
+            }
+        }
+        &.disabled {
+            cursor: no-drop;
+            opacity: .5;
+        }
     }
-	}
-	
-  .folder { /* set size to tile */
-    height: 3.5em;
-    margin-bottom: 30px;
-	}
-	
-  .file { /* set size to tile */
-    height: 13em;
-  }
+
+    .folder { /* set size to tile */
+        height: 3.5em;
+        margin-bottom: 30px;
+    }
+
+    .file { /* set size to tile */
+        height: 13em;
+    }
 }
 
 .selected {
-		background-color: mat-color($primary, 50);
-		
-		.mat-light-blue-50-bg {
-			background-color: mat-color($primary, 50) !important;
-		}
+    background-color: mat-color($primary, 50);
+
+    .mat-light-blue-50-bg {
+        background-color: mat-color($primary, 50) !important;
+    }
 }

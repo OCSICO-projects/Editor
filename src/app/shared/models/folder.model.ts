@@ -22,6 +22,7 @@ export class Folder extends BaseModel {
 	duration?: any;
 	updated_at?: any;
 	content?: any;
+	disabled?: boolean;
 
 
 	constructor(src: Folder) {

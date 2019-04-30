@@ -4,47 +4,46 @@ import { TourService } from 'ngx-tour-md-menu';
 import { takeUntil } from 'rxjs/operators';
 
 const localStorageStatusKey = 'tour_statuses';
-
-const localStorageStepIdsKey = 'tour_current_step_ids';
+const localStorageStepIdsKey = 'tour_shown_step_ids';
 
 const initialTour = 'initial';
 const objectSettingsTour = 'objectSettings';
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 export class EditorTourService {
     private steps = {
-        [initialTour]: [{
-            stepId: 'editor-header-add',
-            anchorId: 'editor-header-add',
-            content: 'Press “Add” button to add object to the slide or create new slide',
-            title: 'Tip: "Add" button',
-						enableBackdrop: true,
-						endBtnTitle: 'Close'
-				},
-				{
-					stepId: 'editor-general-settings',
-					anchorId: 'editor-general-settings',
-					content: 'Use general settings to set canvas and background color',
-					title: 'Tip: General Canvas Settings',
-					enableBackdrop: true,
-					endBtnTitle: 'Close'
-				}],
-        [objectSettingsTour]: [{
-            stepId: 'editor-object-settings',
-            anchorId: 'editor-object-settings',
-            content: 'Use object properties to customize object view or add animation to the object',
-						title: 'Tip: Object Properties',
-						enableBackdrop: true,
-						endBtnTitle: 'Close'
-        }],
+        [initialTour]: [
+            {
+                stepId: 'editor-header-add',
+                anchorId: 'editor-header-add',
+                content: 'Press “Add” button to add object to the slide or create new slide',
+                title: 'Tip: "Add" button',
+                enableBackdrop: true,
+                endBtnTitle: 'Close'
+            },
+            {
+                stepId: 'editor-general-settings',
+                anchorId: 'editor-general-settings',
+                content: 'Use general settings to set canvas and background color',
+                title: 'Tip: General Canvas Settings',
+                enableBackdrop: true,
+                endBtnTitle: 'Close'
+            }
+        ],
+        [objectSettingsTour]: [
+            {
+                stepId: 'editor-object-settings',
+                anchorId: 'editor-object-settings',
+                content: 'Use object properties to customize object view or add animation to the object',
+                title: 'Tip: Object Properties',
+                enableBackdrop: true,
+                endBtnTitle: 'Close'
+            }
+        ],
     };
-    private initialTourStepIds = {
-        [initialTour]: this.steps[initialTour][0].stepId,
-        [objectSettingsTour]: this.steps[objectSettingsTour][0].stepId
-    };
-    private currentStepIds = this.getCurrentStepIds();
+    private shownStepIds = this.getShownStepIds();
     private currentTour = initialTour;
     private isInitialTour = true;
     private initialTourStatuses = {
@@ -58,40 +57,41 @@ export class EditorTourService {
     constructor(
         private tourService: TourService
     ) {
-		}
+        this.filterShownStepIds();
+    }
 
     initialize() {
         if (!this.allToursPassed()) {
-						this.tourService.initialize$
-							.pipe(
-								takeUntil(this.onDestroy$)
-							)
-							.subscribe(() => {
-									setTimeout(() => {
-											this.tourService.startAt(this.currentStepIds[this.currentTour]);
-									}, 400);
-							});
-						this.tourService.end$
-							.pipe(
-								takeUntil(this.onDestroy$)
-							)
-							.subscribe((x) => {
-									this.markTourAsEnded(this.currentTour);
-							});
-						this.tourService.stepShow$
-							.pipe(
-								takeUntil(this.onDestroy$)
-							)
-							.subscribe((step) => {
-									this.storeCurrentTourStepId(this.currentTour, step.stepId);
-							});
+            this.tourService.initialize$
+                .pipe(
+                    takeUntil(this.onDestroy$)
+                )
+                .subscribe(() => {
+                    setTimeout(() => {
+                        this.tourService.start();
+                    }, 400);
+                });
+            this.tourService.end$
+                .pipe(
+                    takeUntil(this.onDestroy$)
+                )
+                .subscribe((x) => {
+                    this.markTourAsEnded(this.currentTour);
+                });
+            this.tourService.stepShow$
+                .pipe(
+                    takeUntil(this.onDestroy$)
+                )
+                .subscribe((step) => {
+                    this.storeCurrentTourStepId(step.stepId);
+                });
             this.startInitialTour();
         }
     }
 
     unsubscribe() {
-				this.onDestroy$.next();
-				this.onDestroy$.complete();
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 
     startInitialTour() {
@@ -111,7 +111,8 @@ export class EditorTourService {
     }
 
     private startTour(tourKey: string) {
-        if (this.tourStatuses[tourKey]) {
+        this.filterShownStepIds();
+        if (this.tourStatuses[tourKey] && this.steps[tourKey].length) {
             this.tourService.end();
             this.isInitialTour = tourKey === initialTour;
             this.currentTour = tourKey;
@@ -126,7 +127,7 @@ export class EditorTourService {
     }
 
     private markTourAsEnded(tourKey: string) {
-        if (this.currentStepIds[tourKey] === this.steps[tourKey][this.steps[tourKey].length - 1].stepId) {
+        if (this.steps[tourKey].filter(step => this.shownStepIds.indexOf(step.stepId) === -1).length === 0) {
             this.tourStatuses[tourKey] = false;
             localStorage.setItem(localStorageStatusKey, JSON.stringify(this.tourStatuses));
         }
@@ -135,13 +136,22 @@ export class EditorTourService {
         }
     }
 
-    private getCurrentStepIds() {
-        const currentStepIds = localStorage.getItem(localStorageStepIdsKey);
-        return currentStepIds ? JSON.parse(currentStepIds) : this.initialTourStepIds;
+    private getShownStepIds() {
+        const shownStepIds = localStorage.getItem(localStorageStepIdsKey);
+        return shownStepIds ? JSON.parse(shownStepIds) : [];
     }
 
-    private storeCurrentTourStepId(tour: string, stepId: string) {
-        this.currentStepIds[tour] = stepId;
-        localStorage.setItem(localStorageStepIdsKey, JSON.stringify(this.currentStepIds));
+    private storeCurrentTourStepId(stepId: string) {
+        this.shownStepIds.push(stepId);
+        localStorage.setItem(localStorageStepIdsKey, JSON.stringify(this.shownStepIds));
+    }
+
+    private filterShownStepIds() {
+        Object.keys(this.steps).map(tourKey => {
+            this.steps[tourKey] = this.steps[tourKey].filter(step => this.shownStepIds.indexOf(step.stepId) === -1);
+            if (this.steps[tourKey].length === 0) {
+                this.tourStatuses[tourKey] = false;
+            }
+        });
     }
 }

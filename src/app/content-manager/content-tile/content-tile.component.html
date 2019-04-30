@@ -1,77 +1,89 @@
 <div class="content-tile-wrapper" mwlResizable>
-	<div class="empty-title mat-h2" *ngIf="!dataSource.filteredData.length && isLoad">
-		<span>{{'TOOLBAR.EMPTY_LIST' | translate}}</span>
-		<span class="sub-title-empty mat-h4">{{ 'TOOLBAR.EMPTY_CONTENT_TITLE' | translate }}</span>
-	</div>
+    <div class="empty-title mat-h2" *ngIf="!dataSource.filteredData.length && isLoad">
+        <span>{{'TOOLBAR.EMPTY_LIST' | translate}}</span>
+        <span class="sub-title-empty mat-h4">{{ 'TOOLBAR.EMPTY_CONTENT_TITLE' | translate }}</span>
+    </div>
 
-	<div class="grid-tile-container">
-		<div *ngFor="let folder of dataSource.filteredData">
-			<div *ngIf="folder.type && folder.type==='folder'" class="tile folder" (click)="onSelect(folder)" (dblclick)="nodePreview(folder)"
-			 [ngClass]="{'mat-light-blue-50-bg':folder === selected}">
-				<mat-card class="mat-card">
-					<mat-icon class="mat-card-icon">{{ folder.type }}</mat-icon>
-					<div title="{{ folder.name }}" class="mat-card-tile-title">{{ folder.name | ellipsisText: 20 }}</div>
-					<mat-menu #itemMenu>
-						<button mat-menu-item *ngIf="!folder.readOnly" (click)="nodeRename(folder)">
-							<mat-icon>text_format</mat-icon>
-							{{ 'BUTTONS.RENAME' | translate }}
-						</button>
-						<button mat-menu-item *ngIf="!folder.readOnly" (click)="nodeMove(folder)">
-							<mat-icon class="mat-icon-move">forward</mat-icon>
-							{{ 'BUTTONS.MOVE' | translate }}
-						</button>
-						<button mat-menu-item *ngIf="!folder.readOnly" (click)="nodeDelete(folder)">
-							<mat-icon>delete</mat-icon>
-							{{ 'BUTTONS.DELETE' | translate }}
-						</button>
-					</mat-menu>
-					<button mat-icon-button class="mat-card-menu-button" fxLayoutAlign="center" [matMenuTriggerFor]="itemMenu">
-						<mat-icon class="mat-icon">more_vert</mat-icon>
-					</button>
-				</mat-card>
-			</div>
-		</div>
-	</div>
+    <div class="grid-tile-container">
+        <div *ngFor="let folder of dataSource.filteredData">
+            <div *ngIf="folder.type && folder.type==='folder'" class="tile folder" (click)="onSelect(folder)"
+                 (dblclick)="nodePreview(folder)"
+                 (press)="nodePreview(folder)"
+                 [ngClass]="{'mat-light-blue-50-bg':folder === selected}">
+                <mat-card class="mat-card">
+                    <mat-icon class="mat-card-icon">{{ folder.type }}</mat-icon>
+                    <div title="{{ folder.name }}"
+                         class="mat-card-tile-title">{{ folder.name | ellipsisText: 20 }}</div>
+                    <mat-menu #itemMenu>
+                        <button mat-menu-item *ngIf="!folder.readOnly" (click)="nodeRename(folder)">
+                            <mat-icon>text_format</mat-icon>
+                            {{ 'BUTTONS.RENAME' | translate }}
+                        </button>
+                        <button mat-menu-item *ngIf="!folder.readOnly" (click)="nodeMove(folder)">
+                            <mat-icon class="mat-icon-move">forward</mat-icon>
+                            {{ 'BUTTONS.MOVE' | translate }}
+                        </button>
+                        <button mat-menu-item *ngIf="!folder.readOnly" (click)="nodeDelete(folder)">
+                            <mat-icon>delete</mat-icon>
+                            {{ 'BUTTONS.DELETE' | translate }}
+                        </button>
+                    </mat-menu>
+                    <button mat-icon-button class="mat-card-menu-button" fxLayoutAlign="center"
+                            [matMenuTriggerFor]="itemMenu">
+                        <mat-icon class="mat-icon">more_vert</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+        </div>
+    </div>
 
-	<div class="grid-tile-container">
-		<div *ngFor="let item of dataSource.filteredData">
-			<div *ngIf="item.type!=='folder'" class="tile file" [class.selected]="item.selected" (click)="onSelect(item)"
-			 (dblclick)="nodeChoose(item)" [ngClass]="{'mat-light-blue-50-bg':item === selected}">
-				<div *ngIf="item && item.preview" class="media" appImagePreloader [imageLoader]="item.preview">
-				</div>
-				<div *ngIf="item && !item.preview" class="media no-image-background">
-				</div>
-				<mat-card class="mat-card" [ngClass]="{'mat-light-blue-50-bg':item.selected}">
-					<app-content-item-icon class="mat-card-icon" *ngIf="item" [row]=item></app-content-item-icon>
-					<div title="{{ item.name }}" class="mat-card-tile-title">{{ item.name | ellipsisText: 12 }}</div>
+    <div class="grid-tile-container">
+        <div *ngFor="let item of dataSource.filteredData">
+            <div *ngIf="item.type!=='folder'"
+                 class="tile file"
+                 [class.selected]="item.selected"
+                 [class.disabled]="item.disabled"
+                 (click)="onSelect(item)"
+                 (dblclick)="nodeChoose(item)"
+                 (press)="nodeChoose(item)"
+                 [ngClass]="{'mat-light-blue-50-bg':item === selected}"
+                 [title]="item.disabled ? 'Item is processing. You can select it later' : ''"
+            >
 
-					<mat-menu #itemMenu>
-						<button *ngIf="item.preview" mat-menu-item (click)="nodePreview(item)">
-							<mat-icon>slideshow</mat-icon>
-							{{'BUTTONS.PREVIEW' | translate}}
-						</button>
-						<button mat-menu-item (click)="addToCanvas(item)">
-							<mat-icon>library_add</mat-icon>
-							{{!dialogOptions ? 'Add to Slide' : 'Open Slide'}}
-						</button>
-						<button mat-menu-item (click)="nodeRename(item)">
-							<mat-icon>text_format</mat-icon>
-							{{'BUTTONS.RENAME' | translate}}
-						</button>
-						<button mat-menu-item (click)="nodeMove(item)">
-							<mat-icon class="mat-icon-move">forward</mat-icon>
-							{{'BUTTONS.MOVE' | translate}}
-						</button>
-						<button mat-menu-item (click)="nodeDelete(item)">
-							<mat-icon>delete</mat-icon>
-							{{'BUTTONS.DELETE' | translate}}
-						</button>
-					</mat-menu>
-					<button mat-icon-button class="mat-card-menu-button" fxLayoutAlign="center" [matMenuTriggerFor]="itemMenu">
-						<mat-icon class="mat-icon">more_vert</mat-icon>
-					</button>
-				</mat-card>
-			</div>
-		</div>
-	</div>
+                <div class="media" [style.backgroundImage]="'url(' + item.preview + ')'">
+                </div>
+                <mat-card class="mat-card" [ngClass]="{'mat-light-blue-50-bg':item.selected}">
+                    <app-content-item-icon class="mat-card-icon" *ngIf="item" [row]=item></app-content-item-icon>
+                    <div title="{{ item.name }}" class="mat-card-tile-title">{{ item.name | ellipsisText: 12 }}</div>
+
+                    <mat-menu #itemMenu>
+                        <button *ngIf="item.preview" mat-menu-item (click)="nodePreview(item)">
+                            <mat-icon>slideshow</mat-icon>
+                            {{'BUTTONS.PREVIEW' | translate}}
+                        </button>
+                        <button mat-menu-item (click)="addToCanvas(item)">
+                            <mat-icon>library_add</mat-icon>
+                            {{!dialogOptions ? 'Add to Slide' : 'Open Slide'}}
+                        </button>
+                        <button mat-menu-item (click)="nodeRename(item)">
+                            <mat-icon>text_format</mat-icon>
+                            {{'BUTTONS.RENAME' | translate}}
+                        </button>
+                        <button mat-menu-item (click)="nodeMove(item)">
+                            <mat-icon class="mat-icon-move">forward</mat-icon>
+                            {{'BUTTONS.MOVE' | translate}}
+                        </button>
+                        <button mat-menu-item (click)="nodeDelete(item)">
+                            <mat-icon>delete</mat-icon>
+                            {{'BUTTONS.DELETE' | translate}}
+                        </button>
+                    </mat-menu>
+                    <button *ngIf="!item.disabled" mat-icon-button class="mat-card-menu-button" fxLayoutAlign="center"
+                            [matMenuTriggerFor]="itemMenu">
+                        <mat-icon class="mat-icon">more_vert</mat-icon>
+                    </button>
+                </mat-card>
+            </div>
+        </div>
+    </div>
 </div>

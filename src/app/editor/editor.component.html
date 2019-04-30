@@ -19,6 +19,7 @@
 			class="new-base-object-button"
 			tourAnchor="editor-header-add"
 			(menuOpened)="onAddMenuOpen()"
+            (menuClosed)="onMenuClose()"
 		  >
 			<mat-icon>add</mat-icon>
 		</button>
@@ -178,7 +179,17 @@
 			</div>
 
 			<div class="actions">
-				<button (click)="saveCurrentSlide()" class="submit mat-button">{{'BUTTONS.SAVE' | translate | uppercase}}</button>
+				<button (click)="saveCurrentSlide()" class="submit mat-button" [disabled]="slideIsSaving">
+                    <mat-progress-spinner
+                        *ngIf="slideIsSaving; else saveSlideText"
+                        diameter="24"
+                        mode="indeterminate"
+                        strokeWidth="5"
+                    ></mat-progress-spinner>
+                    <ng-template #saveSlideText>
+                        {{'BUTTONS.SAVE' | translate | uppercase}}
+                    </ng-template>
+                </button>
 			</div>
 
 			<app-logout></app-logout>
@@ -200,7 +211,7 @@
 	</div>
 
 	<div class="project-version mat-h2">
-		V0.0.9
+		V0.0.15
 	</div>
 
 </div>

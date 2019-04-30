@@ -45,6 +45,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     canvasImage: string;
 
     onDestroy$ = new Subject();
+    slideIsSaving = false;
 
     private slideDialogConfig = {
         autoFocus: false,
@@ -79,8 +80,6 @@ export class EditorComponent implements OnInit, OnDestroy {
             .subscribe(objectList => this.objectList = objectList);
         this.editorTourService.initialize();
 
-        this.saveCurrentSlide();
-
         this.currentSlide.general.name = this.currentSlide.general.name ? this.currentSlide.general.name : 'NewSlide';
     }
 
@@ -95,6 +94,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
 
     saveCurrentSlide() {
+        this.slideIsSaving = true;
         this.editorService.generatedPreview$
             .pipe(
                 first()
@@ -127,15 +127,25 @@ export class EditorComponent implements OnInit, OnDestroy {
                                     });
                                     dialogRef.afterClosed().subscribe(currentFolder => {
                                         if (!currentFolder) {
+                                            this.slideIsSaving = false;
                                             return;
                                         }
                                         this.saveSlide$(currentFolder, this.defaultSlide).subscribe();
                                     });
+                                } else {
+                                    this.slideIsSaving = false;
                                 }
 
                             }
+                        }, () => {
+                            this.slideIsSaving = false;
                         });
+                } else {
+                    this.slideIsSaving = false;
+                    this.messageService.showErrorMessage('Please remove all invalid objects (objects without thumbnail) and try again.');
                 }
+            }, () => {
+                this.slideIsSaving = false;
             });
         this.editorService.generatePreview();
     }
@@ -198,7 +208,14 @@ export class EditorComponent implements OnInit, OnDestroy {
                             )
                             .subscribe((result: Resource[]) => {
                                 if (this.currentFolderSlide && this.currentFolderSlide.id) {
-                                    this.saveSlide$(this.defaultSlide, this.currentFolderSlide).subscribe();
+                                    this.saveSlide$(this.defaultSlide, this.currentFolderSlide).subscribe((savedSlide: any) => {
+                                        if (!savedSlide) {
+                                            const isNew = true;
+                                            this.slideDialogConfig.data.isNew = isNew;
+                                            const dialogRef = this.dialog.open(SlideEditDialogComponent, this.slideDialogConfig);
+                                            this.onCloseEditDialog(dialogRef, isNew);
+                                        }
+                                    });
                                 } else {
                                     let saveStart;
 
@@ -489,14 +506,16 @@ export class EditorComponent implements OnInit, OnDestroy {
                         savedSlide.general.resourceId = response['id'];
                         savedSlide.general.resourceVersion = response['version'];
                         this.editorService.updateSlide(savedSlide);
+                        this.slideIsSaving = false;
 
                         return this.messageService.showSuccessMessage(this.getSavedMessage());
                     }
                 ),
-                catchError((error) => (
-                    this.messageService.showErrorMessage(error['message'])
-                        .pipe(switchMap(() => observableThrowError(error)))
-                ))
+                catchError((error) => {
+                    this.slideIsSaving = false;
+                    return this.messageService.showErrorMessage(error['message'])
+                        .pipe(switchMap(() => observableThrowError(error)));
+                })
             );
     }
 

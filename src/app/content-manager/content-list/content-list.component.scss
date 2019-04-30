@@ -1,18 +1,23 @@
 @import "src/styles/mixins-breakpoint";
 
 :host {
-  width: 100%;
+    width: 100%;
 
-  .mat-table {
-    background: transparent;
-    box-shadow: none;
+    .mat-table {
+        background: transparent;
+        box-shadow: none;
 
-    .mat-row {
-      position: relative;
-			cursor: pointer;
-			user-select: none;
-      min-height: 64px;
+        .mat-row {
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+            min-height: 64px;
+            transition: opacity .3s ease-in-out;
+            &.disabled {
+                cursor: no-drop;
+                opacity: .5;
+            }
+        }
     }
-  }
 }
 

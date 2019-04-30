@@ -107,7 +107,12 @@ export class ContentListComponent implements OnInit, AfterContentChecked, OnDest
 	}
 
 	public onSelect(node: Folder | Resource): void {
+	    if (node.disabled) {
+	        return;
+        }
+
 		let selectedNodes: any;
+
 		if (this.ctrlPressed && node.type !== this.contentTypeFolder) {
 			node.selected = !node.selected;
 
@@ -138,14 +143,29 @@ export class ContentListComponent implements OnInit, AfterContentChecked, OnDest
 
 	public isEditable(row) {
 		const type = (row.type || '').toLowerCase();
-		return type === 'compose';
+		return type === 'compose' && !row.disabled;
 	}
 
-	public nodePreview(node: Node): void { this.onShowNodeEmitter.emit(node); }
+	public nodePreview(node: Node): void {
+        if (node.disabled) {
+            return;
+        }
 
-	public nodeEdit(node: Node) { this.editNode.emit(node); }
+	    this.onShowNodeEmitter.emit(node);
+	}
+
+	public nodeEdit(node: Node) {
+        if (node.disabled) {
+            return;
+        }
+
+        this.editNode.emit(node);
+	}
 
 	public nodeChoose(node) {
+	    if (node.disabled) {
+	        return;
+        }
 		if (this.isEditable(node)) {
 			this.nodeEdit(node);
 		} else {

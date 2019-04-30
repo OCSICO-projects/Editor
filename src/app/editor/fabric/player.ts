@@ -322,9 +322,13 @@ export default class Player {
     dispose() {
         cancelAnimationFrame(this.renderLoopId);
         this.playingItem.reject({ isCanceled: true });
-
         Promise.all(this.tracks.map(track => this.disposeTrack(track)))
             .then(() => {
+                this.stylesContainer.remove();
+                this.playerContainer.remove();
+
+                this.tracks = [];
+            }, () => {
                 this.stylesContainer.remove();
                 this.playerContainer.remove();
 

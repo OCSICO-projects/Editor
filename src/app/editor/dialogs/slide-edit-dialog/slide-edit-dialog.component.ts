@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
+import { requiredStringValidator } from '@app/shared/directives/required-string.directive';
 import { Slide } from '../../models/slide.model';
 
 import * as _ from 'lodash';
@@ -32,7 +33,7 @@ export class SlideEditDialogComponent implements OnInit {
 
 	public initForm() {
 		this.slideForm = this.fb.group({
-      name: [this.slideSettings.name, [Validators.required]]
+      name: [this.slideSettings.name, [Validators.required, requiredStringValidator()]]
     });
 	}
 
@@ -41,7 +42,7 @@ export class SlideEditDialogComponent implements OnInit {
 	onSubmit() {
 		if (this.slideForm.valid) {
 			const values = { ...this.slideForm.value };
-
+            values.name = values.name.trim();
 			if (values.duration) { values.duration = String(values.duration * 1000); }
 
 			Object.assign(this.currentSlide.general, values);

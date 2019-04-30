@@ -37,4 +37,5 @@ export class Resource extends BaseModel {
 	resourceId?: string;
 	transition?: string;
 	isDurationEditable?: boolean;
+	disabled?: boolean;
 }

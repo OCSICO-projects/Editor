@@ -93,10 +93,15 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 			)
 			.subscribe(() => {
 				html2canvas(document.getElementsByClassName('canvas-container')[0], {allowTaint : true}).then(canvas => {
-					const image = canvas.toDataURL('image/jpeg', 0.7);
-					if (image) {
-						this.editorService.sendGeneratedPreview(image);
-					}
+					try {
+                        const image = canvas.toDataURL('image/jpeg', 0.7);
+                        if (image) {
+                            this.editorService.sendGeneratedPreview(image);
+                        }
+                    } catch (e) {
+					    console.error(e);
+                        this.editorService.sendGeneratedPreview(null);
+                    }
 				});
 			});
 
